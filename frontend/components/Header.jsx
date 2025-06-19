@@ -1,9 +1,14 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useCart } from "../context/CartContext";
+import Cart from "./Cart";
+
 
 const Header = () => {
   const [navActive, setNavActive] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
+  const { cartItems } = useCart();
+  const [showCart, setShowCart] = useState(false);
 
   const toggleNav = () => setNavActive(!navActive);
   const openSearch = () => setSearchActive(true);
@@ -66,12 +71,17 @@ const Header = () => {
           >
             <i className="fas fa-heart"></i>
           </a>
-          <a
-            href="#"
-            className="text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
+          <button
+            onClick={() => setShowCart(!showCart)}
+            className="relative text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
           >
             <i className="fas fa-shopping-cart"></i>
-          </a>
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {cartItems.length}
+              </span>
+             )}
+          </button>
           <button
             onClick={toggleNav}
             className="md:hidden text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
@@ -137,6 +147,11 @@ const Header = () => {
           >
             &times;
           </button>
+        </div>
+      )}
+      {showCart && (
+        <div className="fixed top-20 right-4 z-50">
+          <Cart />
         </div>
       )}
     </header>
