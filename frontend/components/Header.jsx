@@ -72,16 +72,17 @@ const Header = () => {
             <i className="fas fa-heart"></i>
           </a>
           <button
-            onClick={() => setShowCart(!showCart)}
-            className="relative text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
-          >
-            <i className="fas fa-shopping-cart"></i>
-            {cartItems.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {cartItems.length}
-              </span>
-             )}
-          </button>
+  onClick={() => setShowCart(!showCart)}
+  className="relative text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
+>
+  <i className="fas fa-shopping-cart"></i>
+  {cartItems.length > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {cartItems.length}
+    </span>
+  )}
+</button>
+
           <button
             onClick={toggleNav}
             className="md:hidden text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"

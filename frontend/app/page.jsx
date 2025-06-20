@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Header from "../components/Header";
-import Cart from "../components/Cart";
 import HomeSection from "../components/HomeSection";
 import CategorySection from "../components/CategorySection";
 import CategoryMenu from "../components/CategoryMenu";
@@ -20,7 +19,6 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Cart />
       <main>
         <HomeSection />
         <CategorySection />

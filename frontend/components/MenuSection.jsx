@@ -12,9 +12,13 @@ const MenuSection = () => {
       try {
         const res = await fetch("http://localhost:8080/api/menu");
         const data = await res.json();
-        setMenuItems(data);
+        if (Array.isArray(data)) {
+          setMenuItems(data);
+        } else {
+          console.error("Menü verisi beklenilen formatta değil:", data);
+        }
       } catch (error) {
-        console.error("An error occurred while fetching the menu data:", error);
+        console.error("Menü verisi alınırken hata oluştu:", error);
       } finally {
         setLoading(false);
       }
@@ -47,4 +51,3 @@ const MenuSection = () => {
 };
 
 export default MenuSection;
-
