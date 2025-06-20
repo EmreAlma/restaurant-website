@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const HomeSection = () => {
+  const images = [
+    "/images/image4.png",
+    "/images/image2.png",
+    "/images/dish-5.png",
+  ];
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       id="home"
@@ -19,33 +33,12 @@ const HomeSection = () => {
           Discover Food
         </button>
       </div>
+
       <div className="flex-1 relative mt-8 md:mt-0 w-full h-[400px]">
         <img
-          src="/images/image1.png"
-          alt="Food 1"
-          className="absolute w-[80%] h-auto rounded object-cover"
-          style={{
-            animation:
-              "imageSwitch 15s steps(1) infinite 0s, rotate 3s linear infinite",
-          }}
-        />
-        <img
-          src="/images/image5.png"
-          alt="Food 2"
-          className="absolute w-[80%] h-auto rounded object-cover"
-          style={{
-            animation:
-              "imageSwitch 15s steps(1) infinite 5s, rotate 3s linear infinite",
-          }}
-        />
-        <img
-          src="/images/image4.png"
-          alt="Food 3"
-          className="absolute w-[80%] h-auto rounded object-cover"
-          style={{
-            animation:
-              "imageSwitch 15s steps(1) infinite 10s, rotate 3s linear infinite",
-          }}
+          src={images[index]}
+          alt={`Food ${index + 1}`}
+          className="absolute w-[80%] h-auto rounded object-cover transition-opacity duration-1000"
         />
       </div>
     </section>
