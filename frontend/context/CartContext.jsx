@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product, size = "default") => {
     setCartItems((prev) => [
       ...prev,
-      { ...product, size, quantity: 1 },
+      { ...product, size, quantity: 1, note: "" },
     ]);
   };
 
@@ -26,10 +26,28 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     setCartItems([]);
   };
+  const updateQuantity = (productId, amount) => {
+  setCartItems((prev) =>
+    prev.map((item) =>
+      item.id === productId
+        ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+        : item
+    )
+  );
+};
+
+  const updateNote = (productId, note) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, note } : item
+      )
+    );
+  };
+
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity, updateNote}}
     >
       {children}
     </CartContext.Provider>

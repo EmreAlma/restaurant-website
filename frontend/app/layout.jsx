@@ -1,6 +1,5 @@
 import "./globals.css";
-import { CartProvider } from "../context/CartContext"; // Adjust the path if needed
-
+import { CartProvider } from "../context/CartContext";
 export const metadata = {
   title: "Bite&Dine - Good Food, Great Mood",
   description: "Restaurant website built with Next.js and Tailwind CSS",
