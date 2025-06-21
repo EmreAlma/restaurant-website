@@ -36,18 +36,18 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-const updateNote = (productId, note) => {
-  setCartItems((prev) =>
-    prev.map((item) =>
-      item.id === productId ? { ...item, note } : item
-    )
-  );
-};
+  const updateNote = (productId, note) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, note } : item
+      )
+    );
+  };
 
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity,  updateNote,}}
+      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity, updateNote}}
     >
       {children}
     </CartContext.Provider>

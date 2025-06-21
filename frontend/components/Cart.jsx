@@ -1,24 +1,25 @@
 "use client";
 
 import { useCart } from "../context/CartContext";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
-  const {
-    cartItems,
-    removeFromCart,
-    clearCart,
-    updateQuantity,
-    updateNote,
-  } = useCart();
+  const { cartItems, removeFromCart, clearCart, updateQuantity, updateNote } = useCart();
+  const router = useRouter();
 
   const getTotal = () => {
     return cartItems.reduce((total, item) => {
-      const price =
-        item.size === "large" && item.priceLarge
-          ? item.priceLarge
-          : item.price;
+      const price = item.size === "large" && item.priceLarge ? item.priceLarge : item.price;
       return total + price * item.quantity;
     }, 0);
+  };
+
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      alert("Dein Warenkorb ist leer.");
+      return;
+    }
+    router.push("/checkout");
   };
 
   return (
@@ -28,18 +29,13 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div className="text-center text-gray-500 py-6">
           <p className="text-lg font-medium">🛒 Dein Warenkorb ist leer.</p>
-          <p className="text-sm mt-2">
-            Füge Artikel hinzu, um deine Bestellung zu starten.
-          </p>
+          <p className="text-sm mt-2">Füge Artikel hinzu, um deine Bestellung zu starten.</p>
         </div>
       ) : (
         <>
-          <ul className="space-y-6">
+          <ul className="space-y-4">
             {cartItems.map((item, index) => (
-              <li
-                key={index}
-                className="border-b pb-4 flex flex-col space-y-2"
-              >
+              <li key={index} className="border rounded p-2">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-semibold">{item.name}</h3>
@@ -58,14 +54,6 @@ const Cart = () => {
                       >
                         +
                       </button>
-                      <input
-                        type="text"
-                        maxLength={50}
-                        placeholder="Sonderwunsch"
-                        value={item.note || ""}
-                        onChange={(e) => updateNote(item.id, e.target.value)}
-                        className="ml-2 px-2 py-1 border border-gray-300 rounded text-sm w-32 focus:outline-none focus:ring-1 focus:ring-jellyBeanBlue"
-                      />
                     </div>
                   </div>
                   <div className="text-right">
@@ -85,6 +73,18 @@ const Cart = () => {
                     </button>
                   </div>
                 </div>
+
+                {/* Yorum kutusu */}
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    maxLength={100}
+                    placeholder="Sonderwunsch (optional)"
+                    className="w-full border border-gray-300 rounded p-1 text-sm mt-2 focus:outline-none focus:ring-2 focus:ring-jellyBeanBlue"
+                    value={item.note || ""}
+                    onChange={(e) => updateNote(item.id, e.target.value)}
+                  />
+                </div>
               </li>
             ))}
           </ul>
@@ -98,6 +98,13 @@ const Cart = () => {
               className="mt-2 text-sm text-red-600 hover:underline"
             >
               Warenkorb leeren
+            </button>
+
+            <button
+              onClick={handleCheckout}
+              className="mt-4 w-full bg-sunset text-white py-2 rounded hover:bg-opacity-90 transition"
+            >
+              Zur Kasse
             </button>
           </div>
         </>
