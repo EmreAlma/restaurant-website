@@ -1,57 +1,57 @@
-INSERT INTO menu_item (name, description, price, image) VALUES 
-('Beef Kebab Platter', 'A platter of perfection, traditional Turkish kebabs.', 15.99, '/images/menu-1.png'),
-('Fish & Chips', 'A British favoured cuisine, deep fried cod fish with crispy chips.', 14.99, '/images/menu-2.png'),
-('Beef Shawarma', 'A famous Middle Eastern street food, with perfectly sliced beef.', 6.99, '/images/menu-3.png'),
-('Oreo Cheesecake', 'A sweet cheesy dessert with black forest oreo creating a perfect symphony.', 7.99, '/images/menu-4.png'),
-('The Tandoori Platter', 'A chicken tandoori platter with traditional flavours.', 13.99, '/images/menu-5.png'),
-('Assorted Fruit Salad', 'An array of fruits combining the fresh and juicy flavors of an assorted mix.', 5.99, '/images/menu-6.png');
-
-
--- Kategorien
-INSERT INTO category (id, name) VALUES
-  (1, 'Pizza'),
-  (2, 'Pide'),
-  (3, 'Warme Snacks'),
-  (4, 'Salate'),
-  (5, 'Dessert'),
-  (6, 'Getränke'),
-  (7, 'Biere & Weine');
-
--- Zutaten (einmalig, ID beginnt bei 1)
-INSERT INTO ingredient (id, name) VALUES
-  (1, 'Tomatensauce'),
-  (2, 'Mozzarella'),
-  (3, 'Oregano'),
-  (4, 'Champignons'),
-  (5, 'Zwiebeln'),
-  (6, 'Feta'),
-  (7, 'Gorgonzola'),
-  (8, 'Schinken'),
-  (9, 'Pommes Frites'),
-  (10, 'Sardellen'),
-  (11, 'Kapern'),
-  (12, 'Meeresfrüchte'),
-  (13, 'frische Tomaten'),
-  (14, 'Oliven'),
-  (15, 'Basilikum'),
-  (16, 'Speck'),
-  (17, 'Ei'),
-  (18, 'Kebabfleisch'),
-  (19, 'scharfe Salami'),
-  (20, 'Peperoni'),
-  (21, 'Artischocken'),
-  (22, 'Thunfisch'),
-  (23, 'Crevetten'),
-  (24, 'Spinat'),
-  (25, 'Rindfleisch'),
-  (26, 'Knoblauch'),
-  (27, 'Kräuterbutter'),
-  (28, 'Salami'),
-  (29, 'Curry'),
-  (30, 'Pouletgeschnetzeltes'),
-  (31, 'Ananas'),
-  (32, '4 Käsesorten');
-
+--INSERT INTO menu_item (name, description, price, image) VALUES
+--('Beef Kebab Platter', 'A platter of perfection, traditional Turkish kebabs.', 15.99, '/images/menu-1.png'),
+--('Fish & Chips', 'A British favoured cuisine, deep fried cod fish with crispy chips.', 14.99, '/images/menu-2.png'),
+--('Beef Shawarma', 'A famous Middle Eastern street food, with perfectly sliced beef.', 6.99, '/images/menu-3.png'),
+--('Oreo Cheesecake', 'A sweet cheesy dessert with black forest oreo creating a perfect symphony.', 7.99, '/images/menu-4.png'),
+--('The Tandoori Platter', 'A chicken tandoori platter with traditional flavours.', 13.99, '/images/menu-5.png'),
+--('Assorted Fruit Salad', 'An array of fruits combining the fresh and juicy flavors of an assorted mix.', 5.99, '/images/menu-6.png');
+--
+--
+---- Kategorien
+--INSERT INTO category (id, name) VALUES
+--  (1, 'Pizza'),
+--  (2, 'Pide'),
+--  (3, 'Warme Snacks'),
+--  (4, 'Salate'),
+--  (5, 'Dessert'),
+--  (6, 'Getränke'),
+--  (7, 'Biere & Weine');
+--
+---- Zutaten (einmalig, ID beginnt bei 1)
+--INSERT INTO ingredient (id, name) VALUES
+--  (1, 'Tomatensauce'),
+--  (2, 'Mozzarella'),
+--  (3, 'Oregano'),
+--  (4, 'Champignons'),
+--  (5, 'Zwiebeln'),
+--  (6, 'Feta'),
+--  (7, 'Gorgonzola'),
+--  (8, 'Schinken'),
+--  (9, 'Pommes Frites'),
+--  (10, 'Sardellen'),
+--  (11, 'Kapern'),
+--  (12, 'Meeresfrüchte'),
+--  (13, 'frische Tomaten'),
+--  (14, 'Oliven'),
+--  (15, 'Basilikum'),
+--  (16, 'Speck'),
+--  (17, 'Ei'),
+--  (18, 'Kebabfleisch'),
+--  (19, 'scharfe Salami'),
+--  (20, 'Peperoni'),
+--  (21, 'Artischocken'),
+--  (22, 'Thunfisch'),
+--  (23, 'Crevetten'),
+--  (24, 'Spinat'),
+--  (25, 'Rindfleisch'),
+--  (26, 'Knoblauch'),
+--  (27, 'Kräuterbutter'),
+--  (28, 'Salami'),
+--  (29, 'Curry'),
+--  (30, 'Pouletgeschnetzeltes'),
+--  (31, 'Ananas'),
+--  (32, '4 Käsesorten');
+--
 -- Kategorie: Pizza
 INSERT INTO product (id, name, description, price, price_large, category_id) VALUES
   (1, 'Pizza Margherita', 'Tomatensauce, Mozzarella, Oregano', 15.50, 25.50, 1),
@@ -91,7 +91,7 @@ INSERT INTO product (id, name, description, price, price_large, category_id) VAL
   (35, 'Pizza Hawaii', 'Tomatensauce, Mozzarella, Schinken, Ananas, Oregano', 19.50, 32.50, 1),
   (36, 'Pizza Taj Mahal', 'Tomatensauce, Mozzarella, Curry, Pouletgeschnetzeltes, Ananas, Oregano', 20.50, 34.50, 1),
   (37, 'Pizza Quattro Formaggi', 'Tomatensauce, Mozzarella, 4 Käsesorten, Oregano', 20.50, 34.50, 1),
-  (38, 'Pizza Vegetaria', 'Tomatensauce, Mozzarella, Oregano und drei Zutaten nach Wahl', 18.50, 31.50, 1),
+  (38, 'Pizza Vegetaria', 'Tomatensauce, Mozzarella, Oregano und drei Zutaten nach Wahl', 18.50, 31.50  , 1),
   (39, 'Wunschpizza', 'Tomatensauce, Mozzarella, Oregano und vier Zutaten nach Wahl', 23.50, 38.50, 1);
 
 -- Kategorie: Pide
@@ -178,7 +178,7 @@ INSERT INTO product (id, name, description, price, category_id) VALUES
   (190, 'Red Bull 0,25l', 'Hoher Koffeingehalt (32,0 mg/100 ml)', 5.00, 6),
   (191, 'Monster Energy 0,355l', 'Hoher Koffeingehalt (36,0 mg/100 ml)', 5.00, 6),
   (192, 'Monster Zero 0,355l', 'Hoher Koffeingehalt (36,0 mg/100 ml)', 5.00, 6);
-  
+
   -- Kategorie: Biere & Weine
 INSERT INTO product (id, name, description, price, category_id) VALUES
   (193, 'Heineken 0,5l', '5% vol', 5.00, 7),

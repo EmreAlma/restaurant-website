@@ -5,6 +5,7 @@ import com.restaurant.backend.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/products")
@@ -22,8 +23,4 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @GetMapping("/category/{categoryId}")
-    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }
 }

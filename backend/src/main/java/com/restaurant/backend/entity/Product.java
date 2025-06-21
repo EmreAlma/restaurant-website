@@ -1,14 +1,18 @@
 package com.restaurant.backend.entity;
 
+import com.restaurant.backend.enums.ProductCategory;
+import com.restaurant.backend.enums.UserRoles;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "product")
 public class Product {
 
     @Id
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -21,17 +25,35 @@ public class Product {
     @Column(name = "price_large")
     private Double priceLarge;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Category category;
+    @Column(name = "image")
+    private String image;
 
-    // Getter und Setter
-    public Long getId() {
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private ProductCategory category;
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -67,11 +89,16 @@ public class Product {
         this.priceLarge = priceLarge;
     }
 
-    public Category getCategory() {
-        return category;
+    public Product(String name, String description, Double price, Double priceLarge, String image, ProductCategory category) {
+        this.id=UUID.randomUUID();
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.priceLarge = priceLarge;
+        this.image = image;
+        this.category = category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public Product() {
     }
 }

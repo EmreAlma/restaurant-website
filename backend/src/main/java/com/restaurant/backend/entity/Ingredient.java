@@ -2,23 +2,25 @@ package com.restaurant.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "ingredient")
 public class Ingredient {
 
     @Id
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
     // Getter ve Setter
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
