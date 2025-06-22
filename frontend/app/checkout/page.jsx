@@ -12,30 +12,57 @@ const CheckoutPage = () => {
     name: "",
     phone: "",
     address: "",
+    postalCode: "",
+    city: "",
     comment: "",
   });
-    
+
   const handleChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const order = {
-      customer,
-      items: cartItems,
+
+    const orderPayload = {
+      products: cartItems.map((item) => ({
+        product: { id: item.id },
+        quantity: item.quantity,
+      })),
+      address: {
+        fullName: customer.name,
+        street: customer.address,
+        postalCode: customer.postalCode,
+        city: customer.city,
+      },
     };
 
-    console.log("SIPARIS:", order);
+    try {
+      const response = await fetch("http://localhost:8080/api/orders/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
 
-    alert("Vielen Dank für Ihre Bestellung!");
-    clearCart();
-    router.push("/");
+      if (!response.ok) {
+        throw new Error("Fehler beim Senden der Bestellung");
+      }
+
+      const savedOrder = await response.json();
+      console.log("Bestellung erfolgreich:", savedOrder);
+
+      alert("Vielen Dank für Ihre Bestellung!");
+      clearCart();
+      router.push("/");
+    } catch (error) {
+      console.error("Bestellungsfehler:", error);
+      alert("Fehler beim Abschließen der Bestellung.");
+    }
   };
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-2xl font-bold mb-6 text-sunset">Bestellung abschliessen</h1>
+      <h1 className="text-2xl font-bold mb-6 text-sunset">Bestellung abschließen</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -65,6 +92,24 @@ const CheckoutPage = () => {
           required
           className="w-full border p-2 rounded"
         />
+        <input
+          type="text"
+          name="postalCode"
+          placeholder="PLZ"
+          value={customer.postalCode}
+          onChange={handleChange}
+          required
+          className="w-full border p-2 rounded"
+        />
+        <input
+          type="text"
+          name="city"
+          placeholder="Stadt"
+          value={customer.city}
+          onChange={handleChange}
+          required
+          className="w-full border p-2 rounded"
+        />
         <textarea
           name="comment"
           placeholder="Zusätzliche Bemerkungen (optional)"
@@ -84,7 +129,7 @@ const CheckoutPage = () => {
             </li>
           ))}
         </ul>
-              
+
         <button
           type="submit"
           className="w-full bg-sunset text-white py-2 rounded hover:bg-opacity-90 transition mt-6"

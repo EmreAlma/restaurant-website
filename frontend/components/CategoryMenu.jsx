@@ -44,7 +44,7 @@ const CategoryMenu = ({ onSelectCategory }) => {
               : "bg-white text-gray-600 border-gray-300"
           }`}
         >
-          {cat.name}
+          {cat.categoryName}
         </button>
       ))}
     </div>
