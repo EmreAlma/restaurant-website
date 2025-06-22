@@ -9,7 +9,7 @@ const Cart = () => {
 
   const getTotal = () => {
     return cartItems.reduce((total, item) => {
-      const price = item.size === "large" && item.priceLarge ? item.priceLarge : item.price;
+      const price = item.price;
       return total + price * item.quantity;
     }, 0);
   };
@@ -39,7 +39,6 @@ const Cart = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-semibold">{item.name}</h3>
-                    <p className="text-sm text-gray-600">Größe: {item.size}</p>
                     <div className="flex items-center space-x-2 mt-1">
                       <button
                         onClick={() => updateQuantity(item.id, -1)}
@@ -54,15 +53,21 @@ const Cart = () => {
                       >
                         +
                       </button>
+                      <input
+                        type="text"
+                        maxLength={30}
+                        placeholder="Sonderwunsch"
+                        className="ml-2 px-2 py-1 border border-gray-300 rounded text-sm w-32 focus:outline-none focus:ring-1 focus:ring-jellyBeanBlue"
+                        value={item.note || ""}
+                        onChange={(e) => updateNote(item.id, e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="font-semibold">
                       CHF{" "}
                       {(
-                        (item.size === "large" && item.priceLarge
-                          ? item.priceLarge
-                          : item.price) * item.quantity
+                        (item.price) * item.quantity
                       ).toFixed(2)}
                     </p>
                     <button
@@ -72,18 +77,6 @@ const Cart = () => {
                       Entfernen
                     </button>
                   </div>
-                </div>
-
-                {/* Yorum kutusu */}
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    maxLength={100}
-                    placeholder="Sonderwunsch (optional)"
-                    className="w-full border border-gray-300 rounded p-1 text-sm mt-2 focus:outline-none focus:ring-2 focus:ring-jellyBeanBlue"
-                    value={item.note || ""}
-                    onChange={(e) => updateNote(item.id, e.target.value)}
-                  />
                 </div>
               </li>
             ))}

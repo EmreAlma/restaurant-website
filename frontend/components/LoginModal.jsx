@@ -1,0 +1,121 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+const LoginModal = ({ isOpen, onClose }) => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+const goToRegister = () => {
+  onClose(); // modalı kapatmak istiyorsan bu satırı ekle
+  router.push("/register");
+};
+
+  useEffect(() => {
+    if (isOpen) {
+      setCredentials({ username: "", password: "" });
+      setError("");
+    }
+  }, [isOpen]);
+
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+
+      if (!res.ok) {
+        setError("Ungültiger Benutzername oder Passwort.");
+        return;
+      }
+
+      const data = await res.json();
+      localStorage.setItem("user", JSON.stringify(data));
+      onClose();
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-6 rounded shadow-lg w-full max-w-sm">
+        <h2 className="text-xl font-semibold mb-4">Login</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Benutzername"
+            value={credentials.username}
+            onChange={handleChange}
+            required
+            className="w-full border p-2 rounded"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Passwort"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+            className="w-full border p-2 rounded"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-sunset text-white py-2 rounded hover:bg-opacity-90 transition"
+          >
+            Einloggen
+          </button>
+
+          <div className="mt-4 text-sm text-center">
+            <p className="mb-2">
+                <button
+                type="button"
+                onClick={() => alert("Passwort zurücksetzen ist noch nicht implementiert.")}
+                className="text-sunset hover:underline"
+                >
+                Passwort vergessen?
+                </button>
+            </p>
+            <p>
+                Noch kein Konto?{" "}
+                <button
+                type="button"
+                onClick={goToRegister}
+                className="text-sunset hover:underline"
+                >
+                Jetzt registrieren
+                </button>
+            </p>
+            </div>
+        </form>
+
+        <button
+          onClick={onClose}
+          className="text-sm text-gray-500 mt-4 hover:underline"
+        >
+          Abbrechen
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default LoginModal;
