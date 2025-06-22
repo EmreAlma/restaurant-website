@@ -23,4 +23,9 @@ public class ProductController {
         return productRepository.findAll();
     }
 
+    @GetMapping("/category/{categoryId}")
+    public List<Product> getProductsByCategoryId(@PathVariable Long categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
+
 }

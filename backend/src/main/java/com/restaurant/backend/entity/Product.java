@@ -1,9 +1,6 @@
 package com.restaurant.backend.entity;
 
-import com.restaurant.backend.enums.ProductCategory;
-import com.restaurant.backend.enums.UserRoles;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.UUID;
 
@@ -29,15 +26,15 @@ public class Product {
     private String image;
 
 
-    @Column(name = "category")
-    @Enumerated(EnumType.STRING)
-    private ProductCategory category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Categories category;
 
-    public ProductCategory getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(ProductCategory category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 
@@ -89,14 +86,15 @@ public class Product {
         this.priceLarge = priceLarge;
     }
 
-    public Product(String name, String description, Double price, Double priceLarge, String image, ProductCategory category) {
-        this.id=UUID.randomUUID();
+    public Product(String name, String description, Double price, Double priceLarge, String image, Long categoryId) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.description = description;
         this.price = price;
         this.priceLarge = priceLarge;
         this.image = image;
-        this.category = category;
+        this.category = new Categories();
+        this.category.setId(categoryId);
     }
 
     public Product() {

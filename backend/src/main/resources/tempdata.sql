@@ -8,14 +8,14 @@
 --
 --
 ---- Kategorien
---INSERT INTO category (id, name) VALUES
---  (1, 'Pizza'),
---  (2, 'Pide'),
---  (3, 'Warme Snacks'),
---  (4, 'Salate'),
---  (5, 'Dessert'),
---  (6, 'Getränke'),
---  (7, 'Biere & Weine');
+INSERT INTO category (id, name) VALUES
+  (1, 'Pizza'),
+  (2, 'Pide'),
+  (3, 'Warme Snacks'),
+  (4, 'Salate'),
+  (5, 'Dessert'),
+  (6, 'Getränke'),
+  (7, 'Biere & Weine');
 --
 ---- Zutaten (einmalig, ID beginnt bei 1)
 --INSERT INTO ingredient (id, name) VALUES

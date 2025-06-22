@@ -9,12 +9,12 @@ import java.util.UUID;
 public class Ingredient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    // Getter ve Setter
 
     public UUID getId() {
         return id;
