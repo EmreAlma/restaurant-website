@@ -19,9 +19,6 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "price_large")
-    private Double priceLarge;
-
     @Column(name = "image")
     private String image;
 
@@ -78,20 +75,14 @@ public class Product {
         this.price = price;
     }
 
-    public Double getPriceLarge() {
-        return priceLarge;
-    }
 
-    public void setPriceLarge(Double priceLarge) {
-        this.priceLarge = priceLarge;
-    }
 
-    public Product(String name, String description, Double price, Double priceLarge, String image, Long categoryId) {
+    public Product(String name, String description, Double price, String image, Long categoryId) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.description = description;
         this.price = price;
-        this.priceLarge = priceLarge;
+
         this.image = image;
         this.category = new Categories();
         this.category.setId(categoryId);
