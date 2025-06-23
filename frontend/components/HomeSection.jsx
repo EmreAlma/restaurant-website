@@ -22,12 +22,11 @@ const HomeSection = () => {
     >
       <div className="flex-1">
         <h2 className="text-5xl text-sunset font-bold mb-4">
-          Satisfy Your Cravings <br />
-          Anytime, Anywhere
+          Feiner, Gesünder, Günstiger<br />
+          Pizza, Döner & mehr.
         </h2>
         <p className="text-lg text-lightColor mb-6">
-          Craving something delicious? We've got you covered. Freshly prepared
-          meals, delivered right to your doorstep.
+          Wo italienische Klassiker und orientalische Spezialitäten zuhause sind.
         </p>
         <button className="bg-sunset text-white px-6 py-3 rounded hover:bg-jellyBeanBlue transition">
           Discover Food

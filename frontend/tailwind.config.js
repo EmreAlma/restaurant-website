@@ -1,5 +1,29 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = { content: [ "./pages//*.{js,ts,jsx,tsx}", "./components//*.{js,ts,jsx,tsx}", ], 
-theme: { 
-  extend: { colors: { jellyBeanBlue: "#507687", sunset: "#ee8e46", lightColor: "#666666", }, }, }, plugins: [], }
+module.exports = {
+  darkMode: false,
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        jellyBeanBlue: "#4CAF50",
+        sunset: "#1B5E20",
+        lightColor: "#1B5E20",
+
+        
+        primary: '#1B5E20',
+        secondary: '#4CAF50',
+        accent: '#E53935',
+        oil: '#F4E04D',
+        darkGreen: '#1B5E20',
+      },
+    },
+  },
+  plugins: [],
+};
+
+
 

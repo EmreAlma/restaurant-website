@@ -82,7 +82,9 @@ const Header = () => {
           </button>
           {user ? (
           <div className="flex items-center gap-3">
-            <span className="text-gray-700 text-sm">👋 {user.username}</span>
+            <span className="text-gray-700 text-sm">
+              Hallo, {user.firstName}
+              </span>
             <button
               onClick={handleLogout}
               className="text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"

@@ -28,7 +28,6 @@ export default function Home() {
         <AboutSection />
         <MenuSection />
         <ReviewSection />
-        <OrderSection />
       </main>
       <Footer />
     </>
