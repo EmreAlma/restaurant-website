@@ -15,6 +15,7 @@ public class User {
     private UUID id;
     @Column(name = "username", unique = true)
     private String username;
+
     @Column(name = "password")
     private String password;
 
@@ -24,8 +25,6 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(unique = true)
-    private String email;
 
     @Column
     private String phoneNumber;
@@ -53,13 +52,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

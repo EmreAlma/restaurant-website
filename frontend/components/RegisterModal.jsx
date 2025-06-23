@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [form, setForm] = useState({
+    userName: "",
     password: "",
     firstName: "",
     lastName: "",
-    email: "",
     phoneNumber: "",
   });
 
@@ -17,10 +17,10 @@ const RegisterModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       setForm({
+        userName: "",
         password: "",
         firstName: "",
         lastName: "",
-        email: "",
         phoneNumber: "",
       });
       setSuccessMessage("");
@@ -47,7 +47,6 @@ const RegisterModal = ({ isOpen, onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       if (!res.ok) throw new Error("Registration failed");
 
       const data = await res.json();
@@ -68,9 +67,9 @@ const RegisterModal = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-semibold mb-4 text-sunset">Registrieren</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">
+          <input name="userName" type="email" placeholder="E-Mail" value={form.userName} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="firstName" placeholder="Vorname" value={form.firstName} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="lastName" placeholder="Nachname" value={form.lastName} onChange={handleChange} required className="w-full border p-2 rounded" />
-          <input name="email" type="email" placeholder="E-Mail" value={form.email} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="phoneNumber" placeholder="Telefonnummer" value={form.phoneNumber} onChange={handleChange} className="w-full border p-2 rounded" />
           <input name="password" type="password" placeholder="Passwort" value={form.password} onChange={handleChange} required className="w-full border p-2 rounded" />
 
