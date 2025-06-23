@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import Cart from "./Cart";
 import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
   const { cartItems } = useCart();
   const [showCart, setShowCart] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   const toggleNav = () => setNavActive(!navActive);
@@ -18,10 +20,8 @@ const Header = () => {
   const closeSearch = () => setSearchActive(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const stored = localStorage.getItem("user");
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
   const handleLogout = () => {
@@ -33,7 +33,7 @@ const Header = () => {
     <><header className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
         <Link href="/" className="text-3xl font-extrabold text-sunset">
-          Bite&Dine
+          Pizza Oregano
         </Link>
         <nav className="hidden md:flex space-x-6">
           <a
@@ -101,7 +101,7 @@ const Header = () => {
           </button>
         )}
           <button
-            onClick={() => setShowCart(!showCart)}
+            onClick={() => setIsLoginOpen(true)}
             className="relative text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
           >
             <i className="fas fa-shopping-cart"></i>
@@ -183,7 +183,21 @@ const Header = () => {
           <Cart />
         </div>
       )}
-    </header><LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} /></>
+    </header>
+    {/* Modals */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        openRegisterModal={() => {
+          setIsLoginOpen(false);
+          setIsRegisterOpen(true);
+        }}
+      />
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
+      </>
   );
 };
 

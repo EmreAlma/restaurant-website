@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -98,7 +98,7 @@ const goToRegister = () => {
                 Noch kein Konto?{" "}
                 <button
                 type="button"
-                onClick={goToRegister}
+                onClick={openRegisterModal}
                 className="text-sunset hover:underline"
                 >
                 Jetzt registrieren
