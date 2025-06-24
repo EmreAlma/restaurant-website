@@ -1,5 +1,6 @@
 package com.restaurant.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -13,7 +14,8 @@ public class Address {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id") // foreign key
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
 
@@ -29,6 +31,16 @@ public class Address {
     @Column(name = "city", nullable = false)
     private String city;
 
+    @Column(name = "description")
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public UUID getId() {
         return id;

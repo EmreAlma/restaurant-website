@@ -1,7 +1,5 @@
 package com.restaurant.backend.model.auth;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 
 public class AuthRequest {
     private String userName;

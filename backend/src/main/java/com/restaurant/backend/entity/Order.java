@@ -2,6 +2,7 @@ package com.restaurant.backend.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.restaurant.backend.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<OrderItem> products;
+    private List<OrderItem> orderItems;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
@@ -28,7 +29,39 @@ public class Order {
     private Instant orderTime;
 
     @Column(name = "totalPrice")
-    private BigInteger totalPrice;
+    private Double totalPrice;
+
+    @Column(name = "orderStatus")
+    private OrderStatus orderStatus;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     @PrePersist
     protected void onCreate() {
@@ -43,12 +76,12 @@ public class Order {
         this.id = id;
     }
 
-    public List<OrderItem> getProducts() {
-        return products;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setProducts(List<OrderItem> products) {
-        this.products = products;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Address getAddress() {
@@ -59,10 +92,11 @@ public class Order {
         this.address = address;
     }
 
-    public Order(List<OrderItem> products, Address address) {
-        this.products = products;
+    public Order(List<OrderItem> orderItems, Address address) {
+        this.orderItems = orderItems;
         this.address = address;
         this.orderTime=Instant.now();
+        this.orderStatus=OrderStatus.CREATED;
     }
 
     public Order() {
