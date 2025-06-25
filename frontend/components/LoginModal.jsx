@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
   const [credentials, setCredentials] = useState({
@@ -9,12 +8,6 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
     password: "",
   });
   const [error, setError] = useState("");
-  const router = useRouter();
-
-const goToRegister = () => {
-  onClose(); // modalı kapatmak istiyorsan bu satırı ekle
-  router.push("/register");
-};
 
   useEffect(() => {
     if (isOpen) {
@@ -43,8 +36,17 @@ const goToRegister = () => {
       }
 
       const data = await res.json();
-      localStorage.setItem("user", JSON.stringify(data));
+
+      // Örn: { token: "...", firstName: "Emre", lastName: "Alma", role: "CUSTOMER" }
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+      }));
+
       onClose();
+      location.reload(); // Header'da güncellenmiş kullanıcı bilgisi gösterilsin diye
     } catch (error) {
       console.error("Login error:", error);
       setError("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
@@ -86,25 +88,25 @@ const goToRegister = () => {
 
           <div className="mt-4 text-sm text-center">
             <p className="mb-2">
-                <button
+              <button
                 type="button"
                 onClick={() => alert("Passwort zurücksetzen ist noch nicht implementiert.")}
                 className="text-sunset hover:underline"
-                >
+              >
                 Passwort vergessen?
-                </button>
+              </button>
             </p>
             <p>
-                Noch kein Konto?{" "}
-                <button
+              Noch kein Konto?{" "}
+              <button
                 type="button"
                 onClick={openRegisterModal}
                 className="text-sunset hover:underline"
-                >
+              >
                 Jetzt registrieren
-                </button>
+              </button>
             </p>
-            </div>
+          </div>
         </form>
 
         <button
