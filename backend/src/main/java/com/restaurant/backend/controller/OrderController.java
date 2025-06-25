@@ -1,10 +1,12 @@
 package com.restaurant.backend.controller;
 
 import com.restaurant.backend.entity.Order;
+import com.restaurant.backend.entity.User;
 import com.restaurant.backend.repository.OrderRepository;
 import com.restaurant.backend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +37,11 @@ public class OrderController {
     @DeleteMapping("/delete/{id}")
     public void deleteOrder(@PathVariable UUID id) {
         orderRepository.deleteById(id);
+    }
+
+    @PostMapping("/by-user-id")
+    public ResponseEntity<List<Order>> getOrdersByUserId(@RequestBody User user) {
+        List<Order> orders = orderService.getOrdersByUserId(user.getId());
+        return ResponseEntity.ok(orders);
     }
 }
