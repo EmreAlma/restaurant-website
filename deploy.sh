@@ -15,7 +15,11 @@ echo "🔧 Starting backend (Spring Boot)..."
 
 cd backend || { echo "❌ Backend folder not found"; exit 1; }
 
-# Önce çalışan backend varsa durdur
+# Build JAR with Maven
+echo "🔨 Building backend project with Maven..."
+mvn clean package -DskipTests || { echo "❌ Maven build failed"; exit 1; }
+
+# Stop previous backend process
 PID=$(pgrep -f "backend-0.0.1-SNAPSHOT.jar")
 if [ -n "$PID" ]; then
   echo "🛑 Stopping existing backend process (PID: $PID)..."
@@ -23,9 +27,10 @@ if [ -n "$PID" ]; then
 fi
 
 echo "🚀 Starting backend JAR..."
-nohup java -jar backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
+nohup java -jar target/backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
 
 cd ..
+
 
 # ---------------------
 # FRONTEND - NEXT.JS
