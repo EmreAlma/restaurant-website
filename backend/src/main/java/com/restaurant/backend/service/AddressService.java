@@ -29,10 +29,8 @@ public class AddressService {
             User user=optionalUser.get();
             Address address=new Address();
             address.setCity(addressCreateRequest.getCity());
-            address.setAddressName(addressCreateRequest.getFullName());
             address.setStreet(addressCreateRequest.getStreet());
             address.setPostalCode(addressCreateRequest.getPostalCode());
-            address.setDescription(addressCreateRequest.getDescription());
             address.setUser(user);
             user.getAddresses().add(address);
             userRepository.save(user);
@@ -57,11 +55,10 @@ public class AddressService {
     }
     private Address createAddressWithOrder(Address requestAddress){
         Address address=new Address();
-        address.setDescription(address.getDescription());
         address.setCity(requestAddress.getCity());
         address.setStreet(requestAddress.getStreet());
         address.setPostalCode(requestAddress.getPostalCode());
-        address.setAddressName(requestAddress.getAddressName());
+
         return address;
     }
 }

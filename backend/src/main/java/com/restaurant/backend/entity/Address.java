@@ -18,10 +18,6 @@ public class Address {
     @JsonBackReference
     private User user;
 
-
-    @Column(name = "full_name", nullable = false)
-    private String addressName;
-
     @Column(name = "street", nullable = false)
     private String street;
 
@@ -31,16 +27,6 @@ public class Address {
     @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "description")
-    private String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public UUID getId() {
         return id;
@@ -58,13 +44,6 @@ public class Address {
         this.user = user;
     }
 
-    public String getAddressName() {
-        return addressName;
-    }
-
-    public void setAddressName(String addressName) {
-        this.addressName = addressName;
-    }
 
     public String getStreet() {
         return street;
