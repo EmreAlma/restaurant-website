@@ -75,6 +75,8 @@ public class AuthService {
         newUser.setLastName(request.getLastName());
         newUser.setPhoneNumber(request.getPhoneNumber());
         newUser.setRole(UserRoles.CUSTOMER);
+        request.getAddress().setUser(newUser);
+        newUser.getAddresses().add(request.getAddress());
 
         userRepository.save(newUser);
 

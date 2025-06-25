@@ -1,6 +1,8 @@
 package com.restaurant.backend.model.auth;
 
 
+import com.restaurant.backend.entity.Address;
+
 public class AuthRequest {
     private String username;
 
@@ -10,8 +12,17 @@ public class AuthRequest {
 
     private String lastName;
 
+    private Address address;
 
     private String phoneNumber;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getUsername() {
         return username;
