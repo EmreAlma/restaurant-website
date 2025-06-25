@@ -3,6 +3,7 @@ package com.restaurant.backend.controller;
 import com.restaurant.backend.entity.Order;
 import com.restaurant.backend.repository.OrderRepository;
 import com.restaurant.backend.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,10 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    public Order createOrder( @RequestBody Order order,
+                              HttpServletRequest request) {
+
+        return orderService.createOrder(order,request);
     }
 
     @DeleteMapping("/delete/{id}")

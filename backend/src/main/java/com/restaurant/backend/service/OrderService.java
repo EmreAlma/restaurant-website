@@ -1,16 +1,17 @@
 package com.restaurant.backend.service;
 
-import com.restaurant.backend.entity.Order;
-import com.restaurant.backend.entity.OrderItem;
-import com.restaurant.backend.entity.Product;
-import com.restaurant.backend.entity.User;
+import com.restaurant.backend.config.JwtUtil;
+import com.restaurant.backend.entity.*;
+import com.restaurant.backend.repository.AddressRepository;
 import com.restaurant.backend.repository.OrderRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,15 +21,20 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final AddressService addressService;
+    private final JwtUtil jwtUtil;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository, AddressService addressService, JwtUtil jwtUtil) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+
+        this.addressService = addressService;
+        this.jwtUtil = jwtUtil;
     }
 
     @Transactional
-    public Order createOrder(Order order) {
+    public Order createOrder(Order order, HttpServletRequest request) {
         if (order.getOrderItems() != null) {
             for (OrderItem item : order.getOrderItems()) {
                 UUID productId = item.getProduct().getId();
@@ -38,7 +44,8 @@ public class OrderService {
                 item.setOrder(order);
             }
             calculateOrderPrice(order);
-            setUserToOrder(order);
+            setUserToOrder(order,request);
+            addressService.setAddressToOrder(order);
         }
         return orderRepository.save(order);
     }
@@ -54,12 +61,18 @@ public class OrderService {
          order.setTotalPrice(totalPrice);
     }
 
-
-    private void setUserToOrder(Order order){
-        Optional<User> existingUser = userRepository.findById(order.getUser().getId());
-        if(existingUser.isPresent()){
-            order.setUser(existingUser.get());
+    private void setUserToOrder(Order order, HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        if (token == null || !token.startsWith("Bearer ")) {
+          return;
         }
+
+        String username = jwtUtil.extractUsername(token.substring(7));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+            order.setUser(user);
     }
+
+
 
 }
