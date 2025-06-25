@@ -40,15 +40,15 @@ public class AuthService {
     public ResponseEntity<?> login(AuthRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Hatalı kullanıcı adı veya şifre");
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUserName());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String jwt = jwtUtil.generateToken(userDetails.getUsername());
-        User user = userRepository.findByUsername(request.getUserName()).orElseThrow();
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 
         AuthResponse response = new AuthResponse(
                 jwt,
@@ -63,13 +63,13 @@ public class AuthService {
     }
 
     public ResponseEntity<?> register(AuthRequest request) {
-        Optional<User> existingUser = userRepository.findByUsername(request.getUserName());
+        Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
         if (existingUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Kullanıcı adı zaten kayıtlı.");
         }
 
         User newUser = new User();
-        newUser.setUsername(request.getUserName());
+        newUser.setUsername(request.getUsername());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setFirstName(request.getFirstName());
         newUser.setLastName(request.getLastName());
