@@ -1,8 +1,10 @@
 package com.restaurant.backend.controller;
 
+import com.restaurant.backend.config.JwtUtil;
 import com.restaurant.backend.entity.Order;
 import com.restaurant.backend.entity.User;
 import com.restaurant.backend.repository.OrderRepository;
+import com.restaurant.backend.repository.UserRepository;
 import com.restaurant.backend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,15 @@ import java.util.UUID;
 public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, OrderService orderService) {
+    public OrderController(OrderRepository orderRepository, OrderService orderService, JwtUtil jwtUtil, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.orderService = orderService;
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
     @GetMapping("/all")
     public List<Order> getAllOrders() {
@@ -39,9 +45,14 @@ public class OrderController {
         orderRepository.deleteById(id);
     }
 
-    @PostMapping("/by-user-id")
-    public ResponseEntity<List<Order>> getOrdersByUserId(@RequestBody User user) {
-        List<Order> orders = orderService.getOrdersByUserId(user.getId());
+    @GetMapping("/my-orders")
+    public ResponseEntity<List<Order>> getOrdersFromToken(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+        String username = jwtUtil.extractUsername(token);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+        List<Order> orders = orderService.getOrdersByUser(user);
+
         return ResponseEntity.ok(orders);
     }
 }
