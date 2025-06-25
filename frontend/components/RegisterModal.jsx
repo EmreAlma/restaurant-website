@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [form, setForm] = useState({
-    userName: "",
+    username: "",
     password: "",
     firstName: "",
     lastName: "",
@@ -17,7 +17,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       setForm({
-        userName: "",
+        username: "",
         password: "",
         firstName: "",
         lastName: "",
@@ -33,31 +33,38 @@ const RegisterModal = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const payload = {
-      ...form,
-      // username: form.email, // if backend needs a username send email as username
-      role: "CUSTOMER",
-    };
-
-    try {
-      const res = await fetch("http://localhost:8080/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Registration failed");
-
-      const data = await res.json();
-      setSuccessMessage("✅ Erfolgreich registriert!");
-      setErrorMessage("");
-      onClose(); // Modal kapatılabilir ya da toast eklenebilir
-    } catch (err) {
-      setErrorMessage("❌ Fehler bei der Registrierung.");
-      setSuccessMessage("");
-    }
+  const payload = {
+    ...form,
+    role: "CUSTOMER",
   };
+
+  try {
+    const res = await fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error("Registration failed");
+
+    const text = await res.text(); // 🔄 JSON yerine text
+    console.log("Register response:", text);
+
+    setSuccessMessage("✅ Erfolgreich registriert!");
+    setErrorMessage("");
+    setTimeout(() => {
+      onClose();
+    }, 1000);
+  } catch (err) {
+    console.error("Register error:", err);
+    setErrorMessage("❌ Fehler bei der Registrierung.");
+    setSuccessMessage("");
+  }
+};
+
+
 
   if (!isOpen) return null;
 
@@ -67,7 +74,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-semibold mb-4 text-sunset">Registrieren</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          <input name="userName" type="email" placeholder="E-Mail" value={form.userName} onChange={handleChange} required className="w-full border p-2 rounded" />
+          <input name="username" type="email" placeholder="E-Mail" value={form.username} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="firstName" placeholder="Vorname" value={form.firstName} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="lastName" placeholder="Nachname" value={form.lastName} onChange={handleChange} required className="w-full border p-2 rounded" />
           <input name="phoneNumber" placeholder="Telefonnummer" value={form.phoneNumber} onChange={handleChange} className="w-full border p-2 rounded" />
