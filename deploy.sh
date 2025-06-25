@@ -27,7 +27,7 @@ if [ -n "$PID" ]; then
 fi
 
 echo "🚀 Starting backend JAR..."
-nohup java -jar backend/target/backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
+nohup java -jar target/backend-0.0.1-SNAPSHOT.jar > ../backend.log 2>&1 &
 
 cd ..
 
@@ -41,8 +41,9 @@ cd frontend || { echo "❌ Frontend folder not found"; exit 1; }
 
 echo "📝 Creating .env.production with live API URL..."
 cat > .env.production <<EOL
-NEXT_PUBLIC_API_URL=https:172.238.101.163:8080
+NEXT_PUBLIC_API_URL=http://172.238.101.163:8080
 EOL
+
 
 echo "📦 Installing dependencies..."
 npm install || { echo "❌ npm install failed"; exit 1; }
