@@ -2,18 +2,16 @@ package com.restaurant.backend.service;
 
 import com.restaurant.backend.config.JwtUtil;
 import com.restaurant.backend.entity.*;
-import com.restaurant.backend.repository.AddressRepository;
 import com.restaurant.backend.repository.OrderRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.UUID;
 
 @Service
