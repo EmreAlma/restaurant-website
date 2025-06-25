@@ -27,7 +27,7 @@ if [ -n "$PID" ]; then
 fi
 
 echo "🚀 Starting backend JAR..."
-nohup java -jar target/backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
+nohup java -jar backend/target/backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
 
 cd ..
 
