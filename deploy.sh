@@ -36,7 +36,7 @@ cd frontend || { echo "❌ Frontend folder not found"; exit 1; }
 
 echo "📝 Creating .env.production with live API URL..."
 cat > .env.production <<EOL
-NEXT_PUBLIC_API_URL=https://api.senin-canli-domainin.com
+NEXT_PUBLIC_API_URL=https:172.238.101.163:8080
 EOL
 
 echo "📦 Installing dependencies..."
