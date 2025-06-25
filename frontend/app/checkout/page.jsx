@@ -38,11 +38,11 @@ const CheckoutPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/orders/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderPayload),
-      });
+const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(orderPayload),
+});
 
       if (!response.ok) {
         throw new Error("Fehler beim Senden der Bestellung");

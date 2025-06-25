@@ -10,7 +10,7 @@ const MenuSection = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/menu");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/menu`);
         const data = await res.json();
         if (Array.isArray(data)) {
           setMenuItems(data);

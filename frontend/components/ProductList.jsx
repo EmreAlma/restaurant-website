@@ -8,7 +8,7 @@ const ProductList = ({ categoryId }) => {
 
   useEffect(() => {
     if (categoryId) {
-      fetch(`http://localhost:8080/api/products/category/${categoryId}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/category/${categoryId}`)
         .then((res) => res.json())
         .then(setProducts);
     }
