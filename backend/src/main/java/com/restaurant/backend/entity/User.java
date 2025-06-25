@@ -1,5 +1,7 @@
 package com.restaurant.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.restaurant.backend.enums.UserRoles;
 import jakarta.persistence.*;
 
@@ -16,6 +18,7 @@ public class User {
     @Column(name = "username", unique = true)
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;
 
