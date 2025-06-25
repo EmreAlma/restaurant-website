@@ -29,7 +29,7 @@ public class AddressService {
             User user=optionalUser.get();
             Address address=new Address();
             address.setCity(addressCreateRequest.getCity());
-            address.setFullName(addressCreateRequest.getFullName());
+            address.setAddressName(addressCreateRequest.getFullName());
             address.setStreet(addressCreateRequest.getStreet());
             address.setPostalCode(addressCreateRequest.getPostalCode());
             address.setDescription(addressCreateRequest.getDescription());
@@ -61,7 +61,7 @@ public class AddressService {
         address.setCity(requestAddress.getCity());
         address.setStreet(requestAddress.getStreet());
         address.setPostalCode(requestAddress.getPostalCode());
-        address.setFullName(requestAddress.getFullName());
+        address.setAddressName(requestAddress.getAddressName());
         return address;
     }
 }

@@ -20,7 +20,7 @@ public class Address {
 
 
     @Column(name = "full_name", nullable = false)
-    private String fullName;
+    private String addressName;
 
     @Column(name = "street", nullable = false)
     private String street;
@@ -58,12 +58,12 @@ public class Address {
         this.user = user;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getAddressName() {
+        return addressName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
     }
 
     public String getStreet() {
