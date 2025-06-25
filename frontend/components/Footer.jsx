@@ -3,31 +3,6 @@ const Footer = () => {
     <footer className="bg-gray-100 py-8">
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Our Branches</h3>
-          <ul className="space-y-2">
-            <li>
-              <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map-marker-alt mr-2"></i>Mirpur
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map-marker-alt mr-2"></i>Dhanmandi
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map-marker-alt mr-2"></i>Gulshan
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map-marker-alt mr-2"></i>Banani
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
           <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
@@ -53,14 +28,14 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Us</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Unsere Kontaktdaten</h3>
           <ul className="space-y-2">
             <li>
               <a
                 href="tel:+8801234567890"
                 className="text-gray-600 hover:text-sunset"
               >
-                <i className="fas fa-phone mr-2"></i>+880 1234 567-890
+                <i className="fas fa-phone mr-2"></i>062 965 05 05
               </a>
             </li>
             <li>
@@ -68,44 +43,29 @@ const Footer = () => {
                 href="mailto:info@biteanddine.com"
                 className="text-gray-600 hover:text-sunset"
               >
-                <i className="fas fa-envelope mr-2"></i>info@biteanddine.com
+                <i className="fas fa-envelope mr-2"></i>info@pizzaoregano.com
               </a>
             </li>
             <li>
               <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map mr-2"></i>69/a, Mirpur, Dhaka 1234
+                <i className="fas fa-map mr-2"></i>Hautstrasse 15, , Rohrbach 4938 Bern
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4">
-            Connect with Us
-          </h3>
-          <div className="flex space-x-4">
-            <a
-              href="#"
-              className="w-8 h-8 bg-sunset text-white rounded-full flex items-center justify-center hover:bg-jellyBeanBlue"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a
-              href="#"
-              className="w-8 h-8 bg-sunset text-white rounded-full flex items-center justify-center hover:bg-jellyBeanBlue"
-            >
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a
-              href="#"
-              className="w-8 h-8 bg-sunset text-white rounded-full flex items-center justify-center hover:bg-jellyBeanBlue"
-            >
-              <i className="fab fa-instagram"></i>
-            </a>
-          </div>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Öffnungszeiten</h3>
+          <ul className="space-y-1 text-gray-600 text-sm">
+            <li><strong>Montag:</strong> Geschlossen</li>
+            <li><strong>Di–Do:</strong> 11:30–13:30 / 17:00–22:00</li>
+            <li><strong>Freitag:</strong> 11:30–13:30 / 17:00–23:00</li>
+            <li><strong>Samstag:</strong> 11:30–14:00 / 16:00–23:00</li>
+            <li><strong>Sontag:</strong> 11:30–14:00 / 16:00–22:00</li>
+          </ul>
         </div>
       </div>
       <div className="mt-8 border-t pt-4 flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto px-4">
-        <p className="text-gray-600">© 2025 Bite&Dine. All rights reserved.</p>
+        <p className="text-gray-600">© 2025 Pizza Oregano. All rights reserved.</p>
         <div className="flex space-x-4">
           <a href="#" className="text-gray-600 hover:text-sunset">
             Privacy Policy
