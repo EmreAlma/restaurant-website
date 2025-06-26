@@ -24,28 +24,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // CSRF hâlâ kapalı kalabilir
-            .csrf(csrf -> csrf.disable())
-
-            // 1️⃣  H2 Console’a tam izin ver
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                        "/h2-console/**",
-                        "/api/auth/**",
-                        "/api/products/**",
-                        "/api/categories/**",
-                        "/api/address/**"
-                    ).permitAll()
-                    .anyRequest().authenticated())
-
-            // 2️⃣  Frame-Options’u sameOrigin yap
-            .headers(headers -> headers
-                    .frameOptions(frame -> frame.sameOrigin()))
-
-            // 3️⃣  Stateless oturum ayarı ve JWT filtresi
-            .sessionManagement(sess -> sess
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/h2-console/**",
+                                "/api/auth/**",
+                                "/api/products/**",
+                                "/api/categories/**",
+                                "/api/address/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
