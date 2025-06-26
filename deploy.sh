@@ -44,6 +44,14 @@ cat > .env.production <<EOL
 NEXT_PUBLIC_API_URL=http://172.238.101.163:8080
 EOL
 
+# .env.local dosyasını geçici olarak kaldır
+if [ -f .env.local ]; then
+  echo "⚠️  .env.local detected, renaming temporarily..."
+  mv .env.local .env.local.bak
+fi
+
+# Eski build varsa temizle
+rm -rf .next
 
 echo "📦 Installing dependencies..."
 npm install || { echo "❌ npm install failed"; exit 1; }
@@ -54,4 +62,9 @@ npm run build || { echo "❌ Build failed"; exit 1; }
 echo "🚀 Starting frontend with pm2..."
 pm2 restart nextjs || pm2 start npm --name nextjs -- start
 
-echo "✅ Deployment completed successfully!"
+# .env.local dosyasını geri al
+if [ -f .env.local.bak ]; then
+  echo "♻️  Restoring .env.local..."
+  mv .env.local.bak .env.local
+fi
+
