@@ -12,7 +12,6 @@ const CategoryMenu = ({ onSelectCategory }) => {
       .then((data) => {
         if (Array.isArray(data)) {
           setCategories(data);
-          console.log("Categories loaded:", data);
           if (data.length > 0) {
             setActiveId(data[0].id);
             onSelectCategory(data[0].id);
@@ -27,7 +26,6 @@ const CategoryMenu = ({ onSelectCategory }) => {
   }, []);
 
   const handleClick = (id) => {
-    console.log("Selected category:", id);
     setActiveId(id);
     onSelectCategory(id);
   };

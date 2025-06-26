@@ -38,9 +38,13 @@ const CheckoutPage = () => {
     };
 
     try {
-const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`, {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`, {
   method: "POST",
-  headers: { "Content-Type": "application/json" },
+  headers: { "Content-Type": "application/json" ,
+     Authorization: `Bearer ${token}`,
+  },
   body: JSON.stringify(orderPayload),
 });
 
@@ -49,7 +53,6 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/crea
       }
 
       const savedOrder = await response.json();
-      console.log("Bestellung erfolgreich:", savedOrder);
 
       alert("Vielen Dank für Ihre Bestellung!");
       clearCart();

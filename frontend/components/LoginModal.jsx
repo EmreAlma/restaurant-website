@@ -39,9 +39,11 @@ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
       // Örn: { token: "...", firstName: "Emre", lastName: "Alma", role: "CUSTOMER" }
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify({
+        username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
-        role: data.role,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
       }));
 
       onClose();

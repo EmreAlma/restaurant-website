@@ -30,10 +30,9 @@ public class SecurityConfig {
             // 1️⃣  H2 Console’a tam izin ver
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
-                        "/h2-console/**",          // EKLENDİ
+                        "/h2-console/**",
                         "/api/auth/**",
                         "/api/products/**",
-                        "/api/orders/**",
                         "/api/categories/**",
                         "/api/address/**"
                     ).permitAll()
