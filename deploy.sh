@@ -44,13 +44,11 @@ cat > .env.production <<EOL
 NEXT_PUBLIC_API_URL=http://172.238.101.163:8080
 EOL
 
-# .env.local dosyasını geçici olarak kaldır
 if [ -f .env.local ]; then
   echo "⚠️  .env.local detected, renaming temporarily..."
   mv .env.local .env.local.bak
 fi
 
-# Eski build varsa temizle
 rm -rf .next
 
 echo "📦 Installing dependencies..."

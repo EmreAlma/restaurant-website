@@ -38,15 +38,18 @@ const CheckoutPage = () => {
     };
 
     try {
-      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      console.log(token);
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" ,
-     Authorization: `Bearer ${token}`,
-  },
-  body: JSON.stringify(orderPayload),
-});
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderPayload),
+      });
 
       if (!response.ok) {
         throw new Error("Fehler beim Senden der Bestellung");
