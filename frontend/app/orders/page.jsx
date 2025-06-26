@@ -2,47 +2,78 @@
 
 import { useEffect, useState } from "react";
 
-const SparislerPage = () => {
+const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) return;
+    const fetchOrders = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.token) {
+          setError("Bitte zuerst einloggen.");
+          return;
+        }
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user/${user.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Sipariş verisi alınamadı:", err);
-        setLoading(false);
-      });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/my-orders`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Fehler beim Laden der Bestellungen");
+
+        const data = await res.json();
+        const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setOrders(sorted);
+      } catch (err) {
+        setError("Fehler beim Laden der Bestellungen.");
+      }
+    };
+
+    fetchOrders();
   }, []);
 
+  const toggleExpand = (orderId) => {
+    setExpandedOrderId((prev) => (prev === orderId ? null : orderId));
+  };
+
+  if (error) return <p className="p-4 text-red-500">{error}</p>;
+
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Meine Bestellungen</h1>
-      {loading ? (
-        <p>Wird geladen...</p>
-      ) : orders.length === 0 ? (
+    <div className="max-w-3xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-6">Meine Bestellungen</h1>
+      {orders.length === 0 ? (
         <p>Keine Bestellungen gefunden.</p>
       ) : (
-        <ul className="space-y-4">
-          {orders.map((order) => (
-            <li key={order.id} className="border p-4 rounded shadow-sm">
-              <p><strong>Bestellnummer:</strong> {order.id}</p>
-              <p><strong>Status:</strong> {order.status}</p>
-              <p><strong>Gesamtpreis:</strong> CHF {order.totalPrice.toFixed(2)}</p>
-              {/* Daha fazla bilgi gerekiyorsa buraya eklenebilir */}
-            </li>
-          ))}
-        </ul>
+        orders.map((order) => (
+          <div key={order.id} className="mb-4 border rounded-lg">
+            <div
+              onClick={() => toggleExpand(order.id)}
+              className="cursor-pointer bg-sunset text-white p-4 flex justify-between items-center rounded-t-lg"
+            >
+              <div>
+                <p className="font-semibold">Bestellung vom {new Date(order.createdAt).toLocaleDateString()}</p>
+                <p className="text-sm">Status: {order.status}</p>
+              </div>
+              <div className="text-sm font-semibold">CHF {order.totalPrice.toFixed(2)}</div>
+            </div>
+            {expandedOrderId === order.id && (
+              <div className="p-4 bg-gray-50 space-y-2">
+                {order.items.map((item, idx) => (
+                  <div key={idx} className="text-sm">
+                    • {item.name} ({item.size}) x {item.quantity} – CHF {item.totalPrice.toFixed(2)}
+                  </div>
+                ))}
+                {order.note && <p className="text-sm italic mt-2">Notiz: {order.note}</p>}
+              </div>
+            )}
+          </div>
+        ))
       )}
     </div>
   );
 };
 
-export default SparislerPage;
+export default OrdersPage;

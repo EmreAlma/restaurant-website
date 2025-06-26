@@ -24,11 +24,11 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
     e.preventDefault();
 
     try {
-const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(credentials),
-});
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
       if (!res.ok) {
         setError("Ungültiger Benutzername oder Passwort.");
         return;
@@ -36,18 +36,18 @@ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
 
       const data = await res.json();
 
-      // Örn: { token: "...", firstName: "Emre", lastName: "Alma", role: "CUSTOMER" }
-      localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify({
+        token: data.token,
+        id: data.id,
         username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
-        address: data.address,
+        addresses: data.addresses,
       }));
 
       onClose();
-      location.reload(); // Header'da güncellenmiş kullanıcı bilgisi gösterilsin diye
+      location.reload();
     } catch (error) {
       console.error("Login error:", error);
       setError("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
