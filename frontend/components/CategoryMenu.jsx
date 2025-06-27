@@ -31,6 +31,7 @@ const CategoryMenu = ({ onSelectCategory }) => {
   };
 
   return (
+    <section id="menu" className="py-16 px-8">
     <div className="flex overflow-x-auto gap-4 px-4 py-2">
       {categories.map((cat) => (
         <button
@@ -46,6 +47,7 @@ const CategoryMenu = ({ onSelectCategory }) => {
         </button>
       ))}
     </div>
+    </section>
   );
 };
 

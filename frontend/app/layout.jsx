@@ -1,7 +1,7 @@
 import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 export const metadata = {
-  title: "Bite&Dine - Good Food, Great Mood",
+  title: "Pizza Oregano",
   description: "Restaurant website built with Next.js and Tailwind CSS",
 };
 

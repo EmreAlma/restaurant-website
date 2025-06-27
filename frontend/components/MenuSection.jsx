@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import React, { useEffect, useState } from "react";
 import MenuCard from "./MenuCard";
@@ -50,4 +50,4 @@ const MenuSection = () => {
   );
 };
 
-export default MenuSection;
+export default MenuSection;*/

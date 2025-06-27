@@ -11,6 +11,11 @@ const Footer = () => {
               </a>
             </li>
             <li>
+              <a href="#menu" className="text-gray-600 hover:text-sunset">
+                Menu
+              </a>
+            </li>
+            <li>
               <a href="#dishes" className="text-gray-600 hover:text-sunset">
                 Dishes
               </a>
@@ -18,11 +23,6 @@ const Footer = () => {
             <li>
               <a href="#about" className="text-gray-600 hover:text-sunset">
                 About
-              </a>
-            </li>
-            <li>
-              <a href="#menu" className="text-gray-600 hover:text-sunset">
-                Menu
               </a>
             </li>
           </ul>
@@ -48,7 +48,7 @@ const Footer = () => {
             </li>
             <li>
               <a href="#" className="text-gray-600 hover:text-sunset">
-                <i className="fas fa-map mr-2"></i>Hautstrasse 15, , Rohrbach 4938 Bern
+                <i className="fas fa-map mr-2"></i>Hauptstrasse 15, , Rohrbach 4938 Bern
               </a>
             </li>
           </ul>

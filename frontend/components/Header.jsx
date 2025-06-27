@@ -37,7 +37,7 @@ const Header = () => {
           Pizza Oregano
         </Link>
         <nav className="hidden md:flex space-x-6">
-          {['home', 'dishes', 'about', 'menu', 'review', 'order'].map((section) => (
+          {['home', 'menu', 'dishes', 'about', 'review'].map((section) => (
             <a
               key={section}
               href={`#${section}`}
@@ -101,7 +101,7 @@ const Header = () => {
       {navActive && (
         <div className="md:hidden bg-white shadow-lg">
           <nav className="flex flex-col space-y-2 px-6 py-4">
-            {['home', 'dishes', 'about', 'menu', 'review', 'order'].map((section) => (
+            {['home', 'menu', 'dishes', 'about', 'review'].map((section) => (
               <a
                 key={section}
                 href={`#${section}`}
@@ -111,22 +111,6 @@ const Header = () => {
               </a>
             ))}
           </nav>
-        </div>
-      )}
-
-      {searchActive && (
-        <div className="absolute top-20 right-6 bg-white shadow-xl p-3 rounded-lg flex items-center space-x-2 transition duration-300">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-jellyBeanBlue"
-            autoFocus />
-          <button
-            onClick={closeSearch}
-            className="text-xl text-gray-600 hover:text-sunset transition-colors duration-300"
-          >
-            &times;
-          </button>
         </div>
       )}
 
