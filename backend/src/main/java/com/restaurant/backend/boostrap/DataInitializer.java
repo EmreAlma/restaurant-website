@@ -2,8 +2,11 @@ package com.restaurant.backend.boostrap;
 
 import com.restaurant.backend.entity.Categories;
 import com.restaurant.backend.entity.Product;
+import com.restaurant.backend.entity.User;
+import com.restaurant.backend.enums.UserRoles;
 import com.restaurant.backend.repository.CategoryRepository;
 import com.restaurant.backend.repository.ProductRepository;
+import com.restaurant.backend.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +18,35 @@ public class DataInitializer {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-
-    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository) {
+     private final UserRepository userRepository;
+    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     @PostConstruct
     public void initData() {
+
+        inertAdminUser();
         initCategories();
         initProducts();
         
+    }
+    private void inertAdminUser(){
+        List<User> users=userRepository.findAll();
+      boolean isAdminExist=   users.stream().anyMatch(user -> UserRoles.OWNER.equals(user.getRole()));
+      if(!isAdminExist){
+          User adminUser=new User();
+          adminUser.setRole(UserRoles.OWNER);
+          adminUser.setLastName("admin");
+          adminUser.setFirstName("admin");
+          adminUser.setUsername("admin");
+          adminUser.setPassword("admin");
+          userRepository.save(adminUser);
+
+      }
+
     }
 
     private void initCategories() {

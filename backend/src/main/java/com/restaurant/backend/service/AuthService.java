@@ -57,6 +57,7 @@ public class AuthService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhoneNumber(),
+                user.getRole(),
                 user.getAddresses()
         );
         return ResponseEntity.ok(response);

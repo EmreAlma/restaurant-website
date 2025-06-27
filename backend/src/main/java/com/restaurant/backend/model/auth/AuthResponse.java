@@ -1,6 +1,7 @@
 package com.restaurant.backend.model.auth;
 
 import com.restaurant.backend.entity.Address;
+import com.restaurant.backend.enums.UserRoles;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,18 +13,28 @@ public class AuthResponse {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private UserRoles userRole;
     private  List<Address> address;
 
-    public AuthResponse(String token, UUID id, String username, String firstName, String lastName, String phoneNumber,  List<Address> address) {
+
+    public AuthResponse(String token, UUID id, String username, String firstName, String lastName, String phoneNumber, UserRoles userRole, List<Address> address) {
         this.token = token;
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.userRole = userRole;
         this.address = address;
     }
 
+    public UserRoles getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRoles userRole) {
+        this.userRole = userRole;
+    }
 
     public String getToken() {
         return token;
