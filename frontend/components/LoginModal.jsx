@@ -39,6 +39,7 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
       localStorage.setItem("user", JSON.stringify({
         token: data.token,
         id: data.id,
+        role: data.role,
         username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
