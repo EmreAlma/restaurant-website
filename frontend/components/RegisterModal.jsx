@@ -47,7 +47,6 @@ const RegisterModal = ({ isOpen, onClose }) => {
       firstName: form.firstName,
       lastName: form.lastName,
       phoneNumber: form.phoneNumber,
-      role: "CUSTOMER",
       address: {
         fullName: `${form.firstName} ${form.lastName}`,
         street: form.address,

@@ -17,11 +17,9 @@ const CategoryMenu = ({ onSelectCategory }) => {
             onSelectCategory(data[0].id);
           }
         } else {
-          console.error("Kategori verisi beklenilen formatta değil:", data);
         }
       })
       .catch((error) => {
-        console.error("Kategori verisi alınırken hata oluştu:", error);
       });
   }, []);
 
