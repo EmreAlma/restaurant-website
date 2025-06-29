@@ -2,7 +2,7 @@ const CategorySection = () => {
   return (
     <section className="py-16 px-8">
       <h3 className="text-center text-2xl text-jellyBeanBlue mb-8">
-        Featured Flavours
+        
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {/* Card 1 */}

@@ -3,7 +3,6 @@ import React from "react";
 const DishesSection = () => {
   return (
     <section id="dishes" className="py-16 px-8">
-      <h3 className="text-center text-2xl text-jellyBeanBlue">Our Dishes</h3>
       <h1 className="text-center text-3xl text-sunset uppercase mb-8">
         Popular Dishes
       </h1>
