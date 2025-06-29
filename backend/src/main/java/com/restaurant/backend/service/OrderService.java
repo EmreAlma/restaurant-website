@@ -59,7 +59,7 @@ public class OrderService {
             setUserToOrder(order, request);
             addressService.setAddressToOrder(order);
         }
-
+        order.setOrderStatus(OrderStatus.CREATED);
         Order savedOrder = orderRepository.save(order);
         orderWebSocketController.broadcastNewOrder(savedOrder);
         return savedOrder;

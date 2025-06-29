@@ -44,7 +44,7 @@ const OrdersPage = () => {
                     order.id === payload.id ? payload : order
                 );
               } else {
-                return [payload, ...prev]; // yeni order en başa eklenir
+                return [payload, ...prev];
               }
             }
           });
@@ -111,7 +111,6 @@ const OrdersPage = () => {
                             <p className="text-sm italic mt-2">Notiz: {order.note}</p>
                         )}
 
-                        {/* Statü Güncelleme Butonları */}
                         <div className="flex gap-2 mt-4 flex-wrap">
                           {["CREATED", "PREPARING", "ON_WAY", "COMPLETED"].map((status) => (
                               <button
