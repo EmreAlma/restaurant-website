@@ -32,15 +32,20 @@ const OrdersPage = () => {
 
         client.subscribe("/topic/orders", (message) => {
           const payload = JSON.parse(message.body);
+          console.log("Gelen mesaj: ", JSON.parse(message.body));
 
           setOrders((prev) => {
             if (Array.isArray(payload)) {
               return payload.reverse();
             } else {
-              // Güncellenen sipariş varsa yerinde değiştir
-              return prev.map((order) =>
-                  order.id === payload.id ? payload : order
-              );
+              const exists = prev.some((order) => order.id === payload.id);
+              if (exists) {
+                return prev.map((order) =>
+                    order.id === payload.id ? payload : order
+                );
+              } else {
+                return [payload, ...prev]; // yeni order en başa eklenir
+              }
             }
           });
         });
