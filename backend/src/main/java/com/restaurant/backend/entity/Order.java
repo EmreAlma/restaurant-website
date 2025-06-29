@@ -39,6 +39,14 @@ public class Order {
     private User user;
 
 
+    public Instant getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Instant orderTime) {
+        this.orderTime = orderTime;
+    }
+
     public User getUser() {
         return user;
     }

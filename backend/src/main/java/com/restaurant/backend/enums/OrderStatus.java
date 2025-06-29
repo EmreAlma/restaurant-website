@@ -4,5 +4,5 @@ public enum OrderStatus {
     CREATED,
     PREPARING,
     ON_WAY,
-    COMPLATED
+    COMPLETED
 }

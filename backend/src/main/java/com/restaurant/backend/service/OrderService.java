@@ -1,17 +1,22 @@
 package com.restaurant.backend.service;
 
 import com.restaurant.backend.config.JwtUtil;
+import com.restaurant.backend.controller.OrderWebSocketController;
 import com.restaurant.backend.entity.*;
+import com.restaurant.backend.enums.OrderStatus;
+import com.restaurant.backend.enums.UserRoles;
 import com.restaurant.backend.repository.OrderRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,14 +27,22 @@ public class OrderService {
     private final UserRepository userRepository;
     private final AddressService addressService;
     private final JwtUtil jwtUtil;
+    private final SimpMessagingTemplate messagingTemplate;
+    private final OrderWebSocketController orderWebSocketController;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository, AddressService addressService, JwtUtil jwtUtil) {
+
+
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository, AddressService addressService, JwtUtil jwtUtil, SimpMessagingTemplate messagingTemplate, OrderWebSocketController orderWebSocketController) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
 
+
         this.addressService = addressService;
         this.jwtUtil = jwtUtil;
+        this.messagingTemplate = messagingTemplate;
+
+        this.orderWebSocketController = orderWebSocketController;
     }
 
     @Transactional
@@ -43,10 +56,13 @@ public class OrderService {
                 item.setOrder(order);
             }
             calculateOrderPrice(order);
-            setUserToOrder(order,request);
+            setUserToOrder(order, request);
             addressService.setAddressToOrder(order);
         }
-        return orderRepository.save(order);
+
+        Order savedOrder = orderRepository.save(order);
+        orderWebSocketController.broadcastNewOrder(savedOrder);
+        return savedOrder;
     }
 
     private void  calculateOrderPrice(Order order){

@@ -37,6 +37,7 @@ public class User {
     private UserRoles role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Address> addresses = new ArrayList<>();
 
     public String getFirstName() {

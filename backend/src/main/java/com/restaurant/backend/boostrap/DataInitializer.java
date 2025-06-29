@@ -8,6 +8,8 @@ import com.restaurant.backend.repository.CategoryRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,10 +21,12 @@ public class DataInitializer {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
      private final UserRepository userRepository;
-    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository) {
+     private final PasswordEncoder passwordEncoder;
+    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -42,7 +46,7 @@ public class DataInitializer {
           adminUser.setLastName("admin");
           adminUser.setFirstName("admin");
           adminUser.setUsername("admin");
-          adminUser.setPassword("admin");
+          adminUser.setPassword(passwordEncoder.encode("admin"));
           userRepository.save(adminUser);
 
       }
