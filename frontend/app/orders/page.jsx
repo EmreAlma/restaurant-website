@@ -19,20 +19,17 @@ const OrdersPage = () => {
       setError("Bitte zuerst einloggen.");
       return;
     }
-
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
+    const token = user.token;
+    console.log("Token: ", token);
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws?token=${token}`);
     const client = new Client({
       webSocketFactory: () => socket,
-      connectHeaders: {
-        Authorization: `Bearer ${user.token}`,
-      },
       reconnectDelay: 5000,
       onConnect: () => {
         console.log("✅ WebSocket bağlantısı kuruldu");
 
         client.subscribe("/topic/orders", (message) => {
           const payload = JSON.parse(message.body);
-          console.log("Gelen mesaj: ", JSON.parse(message.body));
 
           setOrders((prev) => {
             if (Array.isArray(payload)) {

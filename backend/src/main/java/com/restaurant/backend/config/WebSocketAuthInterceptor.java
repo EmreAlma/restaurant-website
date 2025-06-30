@@ -5,7 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -32,21 +34,24 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
 
         if (request instanceof ServletServerHttpRequest servletRequest) {
             HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
-            String authHeader = httpServletRequest.getHeader("Authorization");
+            String token = httpServletRequest.getParameter("token");
 
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                String jwt = authHeader.substring(7);
-                String username = jwtUtil.extractUsername(jwt);
+            if (token != null) {
+                String username = jwtUtil.extractUsername(token);
 
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                if (username != null &&
+                        (authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
+
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                    if (jwtUtil.isTokenValid(jwt, userDetails)) {
-                        UsernamePasswordAuthenticationToken authentication =
+                    if (jwtUtil.isTokenValid(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken auth =
                                 new UsernamePasswordAuthenticationToken(
                                         userDetails, null, userDetails.getAuthorities());
 
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                        SecurityContextHolder.getContext().setAuthentication(auth);
 
                         attributes.put("user", userDetails);
                         return true;
