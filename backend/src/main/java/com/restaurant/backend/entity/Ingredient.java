@@ -15,7 +15,16 @@ public class Ingredient {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(name = "price")
+    private Double price;
 
+
+    public Double getPrice() {
+        return price;
+    }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
     public UUID getId() {
         return id;
     }

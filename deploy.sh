@@ -9,6 +9,20 @@ echo "📥 Pulling latest code from Git..."
 git pull origin main || { echo "❌ Git pull failed"; exit 1; }
 
 # ---------------------
+# DATABASE CONTROL
+# ---------------------
+echo "🔍 Checking if 'restorant_db' database exists..."
+
+DB_EXISTS=$(sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='restorant_db'")
+
+if [ "$DB_EXISTS" != "1" ]; then
+  echo "🆕 Database 'restorant_db' does not exist. Creating..."
+  sudo -u postgres psql -c "CREATE DATABASE restorant_db;" || { echo "❌ Failed to create database"; exit 1; }
+else
+  echo "✅ Database 'restorant_db' exists."
+fi
+
+# ---------------------
 # BACKEND - SPRING BOOT
 # ---------------------
 echo "🔧 Starting backend (Spring Boot)..."
@@ -30,7 +44,6 @@ echo "🚀 Starting backend JAR..."
 nohup java -jar target/backend-0.0.1-SNAPSHOT.jar > ../backend.log 2>&1 &
 
 cd ..
-
 
 # ---------------------
 # FRONTEND - NEXT.JS
@@ -65,4 +78,3 @@ if [ -f .env.local.bak ]; then
   echo "♻️  Restoring .env.local..."
   mv .env.local.bak .env.local
 fi
-
