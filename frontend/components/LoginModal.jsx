@@ -41,12 +41,12 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
       localStorage.setItem("user", JSON.stringify({
         token: data.token,
         id: data.id,
-        role: data.role,
+        role: data.userRole,
         username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
-        addresses: data.addresses,
+        addresses: data.address,
       }));
 
       const storedCart = localStorage.getItem("cart");
