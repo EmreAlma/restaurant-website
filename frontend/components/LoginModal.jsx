@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
 
 const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
   const [credentials, setCredentials] = useState({
@@ -8,6 +9,7 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
     password: "",
   });
   const [error, setError] = useState("");
+  const { setCartItems } = useCart();
 
   useEffect(() => {
     if (isOpen) {
@@ -46,6 +48,12 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
         phoneNumber: data.phoneNumber,
         addresses: data.addresses,
       }));
+
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
+      }
+
 
       onClose();
       location.reload();

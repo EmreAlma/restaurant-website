@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 // 1. Create the context
 const CartContext = createContext();
@@ -9,11 +9,24 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
+  // Add cart from the localstorage
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  }, []);
+
+  // when chart change add to  localStorage
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   // Add a product to the cart with an optional size
-  const addToCart = (product, size = "default") => {
+  const addToCart = (product) => {
     setCartItems((prev) => [
       ...prev,
-      { ...product, size, quantity: 1, note: "" },
+      { ...product, quantity: 1, note: "" },
     ]);
   };
 
@@ -47,7 +60,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity, updateNote}}
+      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity, updateNote, setCartItems}}
     >
       {children}
     </CartContext.Provider>

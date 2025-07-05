@@ -3,16 +3,27 @@
 import { useCart } from "../../context/CartContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import LoginModal from "../../components/LoginModal";
 
 const CheckoutPage = () => {
   const { cartItems, clearCart } = useCart();
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [comment, setComment] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
-    if (stored) setUser(JSON.parse(stored));
+    if (stored) {
+      const parsedUser = JSON.parse(stored);
+      if (parsedUser?.token) {
+        setUser(parsedUser);
+      } else {
+        setShowLogin(true);
+      }
+    } else {
+      setShowLogin(true);
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -58,10 +69,20 @@ const CheckoutPage = () => {
     }
   };
 
+  if (showLogin) {
+    return (
+      <LoginModal
+        isOpen={true}
+        onClose={() => router.push("/")}
+        openRegisterModal={() => router.push("/")} // optional yönlendirme
+      />
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-2xl font-bold mb-4 text-sunset">Bestellung überprüfen</h1>
-      <p className="mb-6 text-gray-600">Bitte überprüfen Sie Ihre Angaben, bevor Sie die Bestellung abschließen.</p>
+      <h1 className="text-2xl font-bold mb-4 text-sunset">Bestellung abschliessen</h1>
+      <p className="mb-6 text-gray-600">Bitte überprüfen Sie Ihre Angaben, bevor Sie die Bestellung abschliessen.</p>
 
       {user && (
         <div className="mb-6 space-y-1">
@@ -76,27 +97,19 @@ const CheckoutPage = () => {
         <h2 className="text-lg font-semibold">🛒 Deine Produkte</h2>
         <ul className="space-y-2">
           {cartItems.map((item, index) => (
-            <li key={index} className="border p-2 rounded text-sm flex justify-between items-start">
+            <li key={index} className="border p-2 rounded text-sm flex justify-between items-center">
               <div>
-                <div className="font-medium">
-                  {item.name} <span className="text-gray-600">x {item.quantity}</span>
-                </div>
+                <div className="font-medium">{item.name} x {item.quantity}</div>
                 {item.note && <div className="text-gray-600 italic">Wunsch: {item.note}</div>}
               </div>
-              <div className="font-semibold whitespace-nowrap">
-                CHF {((item.totalPrice ?? item.price * item.quantity) || 0).toFixed(2)}
-              </div>
+              <div className="font-semibold">CHF {((item.totalPrice ?? item.price * item.quantity) || 0).toFixed(2)}</div>
             </li>
           ))}
         </ul>
       </div>
 
-
       <div className="mb-6 text-right font-bold">
-        Gesamt: CHF {cartItems.reduce((total, item) => {
-          const price = (item.totalPrice ?? item.price * item.quantity) || 0;
-          return total + price;
-        }, 0).toFixed(2)}
+        Gesamt: CHF {cartItems.reduce((total, item) => total + (item.totalPrice ?? item.price * item.quantity), 0).toFixed(2)}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -105,8 +118,8 @@ const CheckoutPage = () => {
           placeholder="Zusätzliche Bemerkungen (optional)"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          rows="2"
           maxLength={200}
+          rows="2"
           className="w-full border p-2 rounded"
         />
         <p className="text-sm text-gray-500 text-right">
@@ -126,7 +139,7 @@ const CheckoutPage = () => {
             type="submit"
             className="bg-sunset text-white py-2 px-4 rounded hover:bg-opacity-90 transition"
           >
-            ✅ Bestellung abschicken
+            Bestellung abschicken
           </button>
         </div>
       </form>
