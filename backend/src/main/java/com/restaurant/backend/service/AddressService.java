@@ -39,6 +39,11 @@ public class AddressService {
         return null;
     }
     public void setAddressToOrder(Order order){
+        // TODO: User first address automaticly added to order it will be change and support multiple Address selection
+        if (order.getAddress()!=null){
+            order.setAddress(order.getUser().getAddresses().stream().findFirst().get());
+            return;
+        }
         UUID addressUUID=null;
         if(order.getAddress()!=null) {
             addressUUID=order.getAddress().getId();

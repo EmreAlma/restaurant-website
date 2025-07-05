@@ -29,18 +29,23 @@ const CheckoutPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const totalPrice = cartItems.reduce(
+        (total, item) => total + (item.totalPrice ?? item.price * item.quantity),
+        0
+    );
+
     const orderPayload = {
-      products: cartItems.map((item) => ({
-        product: { id: item.id },
-        quantity: item.quantity,
-      })),
+      totalPrice: parseFloat(totalPrice.toFixed(2)),
       address: {
         fullName: `${user.firstName} ${user.lastName}`,
         street: user.address?.street,
         postalCode: user.address?.postalCode,
         city: user.address?.city,
       },
-      note: comment,
+      orderItems: cartItems.map((item) => ({
+        product: { id: item.id },
+        quantity: item.quantity,
+      })),
     };
 
     try {
