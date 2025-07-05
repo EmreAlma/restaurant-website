@@ -25,10 +25,10 @@ const ProfilePage = () => {
         <p><strong>E-Mail:</strong> {user.username}</p>
         <p><strong>Telefonnummer:</strong> {user.phoneNumber || "-"}</p>
 
-        {user.addresses && user.addresses.length > 0 ? (
+        {user.address && user.address.length > 0 ? (
           <>
             <h2 className="mt-4 text-lg font-semibold text-sunset">Adresse</h2>
-            {user.addresses.map((addr, idx) => (
+            {user.address.map((addr, idx) => (
               <div key={idx} className="text-sm bg-gray-50 p-3 rounded mt-2 border">
                 <p>{addr.fullName}</p>
                 <p>{addr.street}</p>

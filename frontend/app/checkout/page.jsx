@@ -38,9 +38,9 @@ const CheckoutPage = () => {
       totalPrice: parseFloat(totalPrice.toFixed(2)),
       address: {
         fullName: `${user.firstName} ${user.lastName}`,
-        street: user.address?.street,
-        postalCode: user.address?.postalCode,
-        city: user.address?.city,
+        street: user.address?.[0]?.street,
+        postalCode: user.address?.[0]?.postalCode,
+        city: user.address?.[0]?.city,
       },
       orderItems: cartItems.map((item) => ({
         product: { id: item.id },
@@ -94,7 +94,7 @@ const CheckoutPage = () => {
           <h2 className="text-lg font-semibold">👤 Kundendaten</h2>
           <p>Name: {user.firstName} {user.lastName}</p>
           <p>Telefon: {user.phoneNumber}</p>
-          <p>Adresse: {user.address?.street}, {user.address?.postalCode} {user.address?.city}</p>
+          <p>Adresse: {user.address[0].street}, {user.address[0].postalCode} {user.address[0].city}</p>
         </div>
       )}
 

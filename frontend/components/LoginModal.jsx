@@ -46,7 +46,7 @@ const LoginModal = ({ isOpen, onClose, openRegisterModal }) => {
         firstName: data.firstName,
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
-        addresses: data.address,
+        address: data.address,
       }));
 
       const storedCart = localStorage.getItem("cart");
