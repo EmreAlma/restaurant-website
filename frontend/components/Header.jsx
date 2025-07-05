@@ -67,6 +67,11 @@ const Header = () => {
                   <a href="/orders" className="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700">
                     Meine Bestellungen
                   </a>
+                  {user.role === "OWNER" && (
+                    <a href="/admin" className="block px-4 py-2 hover:bg-gray-100 text-sm text-blue-600 font-semibold">
+                      Admin Panel
+                    </a>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-red-600"
