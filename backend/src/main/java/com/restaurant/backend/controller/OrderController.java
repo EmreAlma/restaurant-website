@@ -10,7 +10,6 @@ import com.restaurant.backend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,12 +36,10 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public Order createOrder( @RequestBody Order order,
+    public Order createOrder( @RequestBody OrderRequestDTO order,
                               HttpServletRequest request) {
         return orderService.createOrder(order,request);
     }
-
-
 
     @DeleteMapping("/delete/{id}")
     public void deleteOrder(@PathVariable UUID id) {

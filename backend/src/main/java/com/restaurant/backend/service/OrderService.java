@@ -4,8 +4,6 @@ import com.restaurant.backend.config.JwtUtil;
 import com.restaurant.backend.controller.OrderWebSocketController;
 import com.restaurant.backend.entity.*;
 import com.restaurant.backend.enums.OrderStatus;
-import com.restaurant.backend.enums.UserRoles;
-import com.restaurant.backend.model.order.AddressDTO;
 import com.restaurant.backend.model.order.OrderItemRequestDTO;
 import com.restaurant.backend.model.order.OrderRequestDTO;
 import com.restaurant.backend.repository.*;
@@ -70,28 +68,9 @@ public class OrderService {
 
 
     @Transactional
-    public Order createOrder(OrderRequestDTO orderRequest, UUID userId) {
+    public Order createOrder(OrderRequestDTO orderRequest, HttpServletRequest request) {
         Order order = new Order();
 
-        // Kullanıcıyı getir ve ata
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
-        order.setUser(user);
-
-        // Adres oluştur veya var olan adresi ata
-        AddressDTO addrDTO = orderRequest.getAddress();
-        if (addrDTO != null) {
-            Address address = new Address();
-            address.setStreet(addrDTO.getStreet());
-            address.setPostalCode(addrDTO.getPostalCode());
-            address.setCity(addrDTO.getCity());
-            address.setUser(user);  // Adresin sahibi user olarak set edilir
-
-            // Adresi kaydet (persist)
-            address = addressRepository.save(address);
-
-            order.setAddress(address);
-        }
 
         order.setTotalPrice(orderRequest.getTotalPrice());
         order.setOrderTime(Instant.now());
@@ -102,14 +81,12 @@ public class OrderService {
         for (OrderItemRequestDTO itemDTO : orderRequest.getOrderItems()) {
             OrderItem orderItem = new OrderItem();
 
-            // Ürünü bul
             Product product = productRepository.findById(itemDTO.getProductId())
                     .orElseThrow(() -> new RuntimeException("Product not found: " + itemDTO.getProductId()));
             orderItem.setProduct(product);
 
             orderItem.setQuantity(itemDTO.getQuantity());
 
-            // Ingredient listesini UUID'den entity'ye çevir
             List<Ingredient> ingredientsToAdd = itemDTO.getIngredientsToAdd() != null
                     ? ingredientRepository.findAllById(itemDTO.getIngredientsToAdd())
                     : Collections.emptyList();
@@ -126,8 +103,12 @@ public class OrderService {
         }
 
         order.setOrderItems(orderItems);
+        setUserToOrder(order,request);
+        addressService.setAddressToOrder(order);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        orderWebSocketController.broadcastNewOrder(savedOrder);
+        return savedOrder;
     }
 
     private void  calculateOrderPrice(Order order){
@@ -152,6 +133,9 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
             order.setUser(user);
     }
+
+
+
 
     public List<Order> getOrdersByUserId(UUID userId) {
         return orderRepository.findByUserId(userId);

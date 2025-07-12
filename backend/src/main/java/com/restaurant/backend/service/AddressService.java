@@ -40,23 +40,22 @@ public class AddressService {
     }
     public void setAddressToOrder(Order order){
         // TODO: User first address automaticly added to order it will be change and support multiple Address selection
-        if (order.getAddress()!=null){
             order.setAddress(order.getUser().getAddresses().stream().findFirst().get());
             return;
-        }
-        UUID addressUUID=null;
-        if(order.getAddress()!=null) {
-            addressUUID=order.getAddress().getId();
-            if (addressUUID!=null){
-                Optional<Address> userAdress = addressRepository.findById(addressUUID);
-                if (userAdress.isPresent()){
-                    order.setAddress(userAdress.get());
-                }
-            }else {
-            Address addressFromRequest = createAddressWithOrder(order.getAddress());
-            order.setAddress(addressFromRequest);
-            }
-        }
+
+//        UUID addressUUID=null;
+//        if(order.getAddress()!=null) {
+//            addressUUID=order.getAddress().getId();
+//            if (addressUUID!=null){
+//                Optional<Address> userAdress = addressRepository.findById(addressUUID);
+//                if (userAdress.isPresent()){
+//                    order.setAddress(userAdress.get());
+//                }
+//            }else {
+//            Address addressFromRequest = createAddressWithOrder(order.getAddress());
+//            order.setAddress(addressFromRequest);
+//            }
+//        }
     }
     private Address createAddressWithOrder(Address requestAddress){
         Address address=new Address();
