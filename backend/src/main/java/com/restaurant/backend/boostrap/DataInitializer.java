@@ -1,14 +1,15 @@
 package com.restaurant.backend.boostrap;
 
 import com.restaurant.backend.entity.Categories;
+import com.restaurant.backend.entity.Ingredient;
 import com.restaurant.backend.entity.Product;
 import com.restaurant.backend.entity.User;
 import com.restaurant.backend.enums.UserRoles;
 import com.restaurant.backend.repository.CategoryRepository;
+import com.restaurant.backend.repository.IngredientRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +23,14 @@ public class DataInitializer {
     private final ProductRepository productRepository;
      private final UserRepository userRepository;
      private final PasswordEncoder passwordEncoder;
-    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+     private final IngredientRepository ingredientRepository;
+
+    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, IngredientRepository ingredientRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.ingredientRepository = ingredientRepository;
     }
 
     @PostConstruct
@@ -35,7 +39,52 @@ public class DataInitializer {
         inertAdminUser();
         initCategories();
         initProducts();
+        initIngredient();
         
+    }
+
+    private void initIngredient(){
+        
+       List<Ingredient> ingredientList= ingredientRepository.findAll();
+       if(ingredientList.isEmpty()) {
+           List<Ingredient> ingredients = List.of(
+                   new Ingredient("Tomatensauce", 0.0,1L),
+                   new Ingredient("Mozzarella", 0.0,1L),
+                   new Ingredient("Oregano", 0.0,1L),
+                   new Ingredient("Champignons", 0.0,1L),
+                   new Ingredient("Zwiebeln", 0.0,1L),
+                   new Ingredient("Feta", 0.0,1L),
+                   new Ingredient("Gorgonzola", 0.0,1L),
+                   new Ingredient("Schinken", 0.0,2L),
+                   new Ingredient("Pommes Frites", 0.0,2L),
+                   new Ingredient("Sardellen", 0.0,2L),
+                   new Ingredient("Kapern", 0.0,2L),
+                   new Ingredient("Meeresfrüchte", 0.0,2L),
+                   new Ingredient("frische Tomaten", 0.0,1L),
+                   new Ingredient("Oliven", 0.0,3L),
+                   new Ingredient("Basilikum", 0.0,3L),
+                   new Ingredient("Speck", 0.0,3L),
+                   new Ingredient("Ei", 0.0,3L),
+                   new Ingredient("Kebabfleisch", 0.0, 4L),
+                   new Ingredient("scharfe Salami", 0.0, 4L),
+                   new Ingredient("Peperoni", 0.0, 4L),
+                   new Ingredient("Artischocken", 0.0, 4L),
+                   new Ingredient("Thunfisch", 0.0, 4L),
+                   new Ingredient("Crevetten", 0.0, 4L),
+                   new Ingredient("Spinat", 0.0, 4L),
+                   new Ingredient("Rindfleisch", 0.0,1L),
+                   new Ingredient("Knoblauch", 0.0,1L),
+                   new Ingredient("Kräuterbutter", 0.0,1L),
+                   new Ingredient("Salami", 0.0,1L),
+                   new Ingredient("Curry", 0.0,1L),
+                   new Ingredient("Pouletgeschnetzeltes", 0.0,1L),
+                   new Ingredient("Ananas", 0.0,1L),
+                   new Ingredient("4 Käsesorten", 0.0,1L)
+           );
+
+           ingredientRepository.saveAll(ingredients);
+       }
+
     }
     private void inertAdminUser(){
         List<User> users=userRepository.findAll();

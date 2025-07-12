@@ -18,6 +18,30 @@ public class Ingredient {
     @Column(name = "price")
     private Double price;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Categories category;
+
+    public Ingredient() {
+    }
+    public Ingredient(UUID id) {
+        this.id = id;
+    }
+
+    public Ingredient(String name, Double price, Long categoryid) {
+        this.name = name;
+        this.price = price;
+        this.category = new Categories();
+        this.category.setId(categoryid);
+    }
+
+    public Categories getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
+    }
 
     public Double getPrice() {
         return price;

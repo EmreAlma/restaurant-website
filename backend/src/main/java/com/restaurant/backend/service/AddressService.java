@@ -4,7 +4,7 @@ package com.restaurant.backend.service;
 import com.restaurant.backend.entity.Address;
 import com.restaurant.backend.entity.Order;
 import com.restaurant.backend.entity.User;
-import com.restaurant.backend.model.auth.AddressCreateRequest;
+import com.restaurant.backend.model.address.AddressCreateRequest;
 import com.restaurant.backend.repository.AddressRepository;
 import com.restaurant.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;

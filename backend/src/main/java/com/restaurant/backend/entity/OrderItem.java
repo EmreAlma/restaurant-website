@@ -27,6 +27,40 @@ public class OrderItem {
     @JsonBackReference
     private Order order;
 
+    @ManyToMany
+    @JoinTable(
+            name = "order_item_ingredient_add",
+            joinColumns = @JoinColumn(name = "order_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private List<Ingredient> ingredientsToAdd;
+
+    @ManyToMany
+    @JoinTable(
+            name = "order_item_ingredient_remove",
+            joinColumns = @JoinColumn(name = "order_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private List<Ingredient> ingredientsToRemove;
+
+
+
+    public List<Ingredient> getIngredientsToAdd() {
+        return ingredientsToAdd;
+    }
+
+    public void setIngredientsToAdd(List<Ingredient> ingredientsToAdd) {
+        this.ingredientsToAdd = ingredientsToAdd;
+    }
+
+    public List<Ingredient> getIngredientsToRemove() {
+        return ingredientsToRemove;
+    }
+
+    public void setIngredientsToRemove(List<Ingredient> ingredientsToRemove) {
+        this.ingredientsToRemove = ingredientsToRemove;
+    }
+
     public Order getOrder() {
         return order;
     }

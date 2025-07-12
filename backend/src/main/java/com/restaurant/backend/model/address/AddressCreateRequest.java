@@ -1,4 +1,4 @@
-package com.restaurant.backend.model.auth;
+package com.restaurant.backend.model.address;
 
 
 import java.util.UUID;
