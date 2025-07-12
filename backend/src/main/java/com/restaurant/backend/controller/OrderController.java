@@ -37,10 +37,10 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public Order createOrder( @RequestBody OrderRequestDTO order,
+    public Order createOrder( @RequestBody Order order,
                               HttpServletRequest request) {
-        return null;
-     }
+        return orderService.createOrder(order,request);
+    }
 
 
 

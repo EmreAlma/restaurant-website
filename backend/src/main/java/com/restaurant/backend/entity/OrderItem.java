@@ -2,6 +2,7 @@ package com.restaurant.backend.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class OrderItem {
             joinColumns = @JoinColumn(name = "order_item_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
+    @JsonIgnore
     private List<Ingredient> ingredientsToAdd;
 
     @ManyToMany
@@ -41,6 +43,7 @@ public class OrderItem {
             joinColumns = @JoinColumn(name = "order_item_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
+    @JsonIgnore
     private List<Ingredient> ingredientsToRemove;
 
 
