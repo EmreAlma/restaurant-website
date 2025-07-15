@@ -9,41 +9,32 @@ const OrdersPage = () => {
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const [error, setError] = useState("");
   const [mounted, setMounted] = useState(false);
-  const stompClientRef = useRef(null); // 🔁 WebSocket client ref
+  const stompClientRef = useRef(null);
 
   useEffect(() => {
     setMounted(true);
-
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.token) {
       setError("Bitte zuerst einloggen.");
       return;
     }
+
     const token = user.token;
-    console.log("Token: ", token);
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws?token=${token}`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log("✅ WebSocket bağlantısı kuruldu");
+        console.log("✅ WebSocket verbunden");
 
         client.subscribe("/topic/orders", (message) => {
           const payload = JSON.parse(message.body);
-
           setOrders((prev) => {
-            if (Array.isArray(payload)) {
-              return payload.reverse();
-            } else {
-              const exists = prev.some((order) => order.id === payload.id);
-              if (exists) {
-                return prev.map((order) =>
-                    order.id === payload.id ? payload : order
-                );
-              } else {
-                return [payload, ...prev];
-              }
-            }
+            if (Array.isArray(payload)) return payload.reverse();
+            const exists = prev.some((o) => o.id === payload.id);
+            return exists
+                ? prev.map((o) => (o.id === payload.id ? payload : o))
+                : [payload, ...prev];
           });
         });
 
@@ -74,46 +65,80 @@ const OrdersPage = () => {
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
   return (
-      <div className="max-w-3xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Live-Bestellungen</h1>
+      <div className="max-w-4xl mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6">Live-Bestellungen</h1>
         {orders.length === 0 ? (
-            <p>Keine Bestellungen empfangen.</p>
+            <p className="text-gray-600">Keine Bestellungen empfangen.</p>
         ) : (
             orders.map((order) => (
-                <div key={order.id} className="mb-4 border rounded-lg">
+                <div key={order.id} className="mb-6 border border-gray-300 rounded-xl overflow-hidden shadow-sm">
                   <div
+                      className="bg-gradient-to-r from-orange-400 to-orange-500 text-white p-4 cursor-pointer flex justify-between items-center"
                       onClick={() => toggleExpand(order.id)}
-                      className="cursor-pointer bg-sunset text-white p-4 flex justify-between items-center rounded-t-lg"
                   >
                     <div>
-                      <p className="font-semibold">
-                        Bestellung vom {new Date(order.orderTime).toLocaleDateString()}
-                      </p>
+                      <p className="font-semibold">Bestellung vom {new Date(order.orderTime).toLocaleString()}</p>
                       <p className="text-sm">Status: {order.orderStatus}</p>
                     </div>
-                    <div className="text-sm font-semibold">
-                      CHF {order.totalPrice?.toFixed(2)}
-                    </div>
+                    <p className="font-semibold text-lg">CHF {order.totalPrice?.toFixed(2)}</p>
                   </div>
 
                   {expandedOrderId === order.id && (
-                      <div className="p-4 bg-gray-50 space-y-2">
-                        {order.orderItems?.map((item, idx) => (
-                            <div key={idx} className="text-sm">
-                              • {item.name} ({item.size}) x {item.quantity} – CHF{" "}
-                              {item.totalPrice?.toFixed(2)}
-                            </div>
-                        ))}
-                        {order.note && (
-                            <p className="text-sm italic mt-2">Notiz: {order.note}</p>
-                        )}
+                      <div className="bg-white p-4 space-y-4">
+                        <div>
+                          <h3 className="font-semibold text-gray-700">Produkte:</h3>
+                          {order.orderItems?.map((item, idx) => (
+                              <div key={idx} className="border border-gray-200 p-3 rounded mb-2 bg-gray-50">
+                                <p className="font-medium">
+                                  {item.product?.name} x {item.quantity}
+                                </p>
+                                <p className="text-sm text-gray-600">{item.product?.description}</p>
 
-                        <div className="flex gap-2 mt-4 flex-wrap">
+                                {item.ingredientsToAdd?.length > 0 && (
+                                    <div className="mt-1 text-sm text-green-600">
+                                      + Eklenen Malzemeler:
+                                      <ul className="list-disc list-inside">
+                                        {item.ingredientsToAdd.map((ing) => (
+                                            <li key={ing.id}>{ing.name} (+{ing.price} CHF)</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                )}
+
+                                {item.ingredientsToRemove?.length > 0 && (
+                                    <div className="mt-1 text-sm text-red-600">
+                                      − Çıkarılan Malzemeler:
+                                      <ul className="list-disc list-inside">
+                                        {item.ingredientsToRemove.map((ing) => (
+                                            <li key={ing.id}>{ing.name}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                )}
+                              </div>
+                          ))}
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-gray-700">Adres:</h3>
+                          <p className="text-sm text-gray-600">
+                            {order.address?.street}, {order.address?.postalCode} {order.address?.city}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-gray-700">Müşteri:</h3>
+                          <p className="text-sm text-gray-600">
+                            {order.user?.firstName} {order.user?.lastName} ({order.user?.username})
+                          </p>
+                        </div>
+
+                        <div className="flex gap-2 mt-2 flex-wrap">
                           {["CREATED", "PREPARING", "ON_WAY", "COMPLETED"].map((status) => (
                               <button
                                   key={status}
                                   onClick={() => updateOrderStatus(order.id, status)}
-                                  className={`px-2 py-1 text-xs rounded ${
+                                  className={`px-3 py-1 text-xs rounded-full font-semibold ${
                                       order.orderStatus === status
                                           ? "bg-green-600 text-white"
                                           : "bg-blue-500 text-white hover:bg-blue-600"

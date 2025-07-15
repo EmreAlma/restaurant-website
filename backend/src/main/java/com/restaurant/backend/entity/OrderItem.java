@@ -28,22 +28,20 @@ public class OrderItem {
     @JsonBackReference
     private Order order;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "order_item_ingredient_add",
             joinColumns = @JoinColumn(name = "order_item_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    @JsonIgnore
     private List<Ingredient> ingredientsToAdd;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "order_item_ingredient_remove",
             joinColumns = @JoinColumn(name = "order_item_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    @JsonIgnore
     private List<Ingredient> ingredientsToRemove;
 
 
