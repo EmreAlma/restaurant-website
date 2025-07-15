@@ -1,7 +1,10 @@
 package com.restaurant.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +29,25 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Categories category;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_default_ingredient",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    @JsonIgnore
+    private List<Ingredient> defaultIngredients = new ArrayList<>();
+
+
+    public List<Ingredient> getDefaultIngredients() {
+        return defaultIngredients;
+    }
+
+    public void setDefaultIngredients(List<Ingredient> defaultIngredients) {
+        this.defaultIngredients = defaultIngredients;
+    }
 
     public Categories getCategory() {
         return category;
@@ -82,12 +104,16 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
-
         this.image = image;
         this.category = new Categories();
         this.category.setId(categoryId);
     }
 
     public Product() {
+    }
+
+    public Product withDefaultIngredients(List<Ingredient> ingredients) {
+        this.defaultIngredients = ingredients;
+        return this;
     }
 }

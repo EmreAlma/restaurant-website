@@ -50,7 +50,7 @@ public class ProductService {
                     .collect(Collectors.toList());
 
             pi.setIngredientstoAdd(matchedIngredients);
-            pi.setIngredientstoRemove(matchedIngredients);
+            pi.setIngredientstoRemove(product.getDefaultIngredients());
 
             productIngredientsList.add(pi);
         }

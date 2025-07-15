@@ -46,25 +46,6 @@ public class OrderService {
         this.addressRepository = addressRepository;
     }
 
-    @Transactional
-    public Order createOrder(Order order, HttpServletRequest request) {
-        if (order.getOrderItems() != null) {
-            for (OrderItem item : order.getOrderItems()) {
-                UUID productId = item.getProduct().getId();
-                Product product = productRepository.findById(productId)
-                        .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
-                item.setProduct(product);
-                item.setOrder(order);
-            }
-            calculateOrderPrice(order);
-            setUserToOrder(order, request);
-            addressService.setAddressToOrder(order);
-        }
-        order.setOrderStatus(OrderStatus.CREATED);
-        Order savedOrder = orderRepository.save(order);
-        orderWebSocketController.broadcastNewOrder(savedOrder);
-        return savedOrder;
-    }
 
 
     @Transactional

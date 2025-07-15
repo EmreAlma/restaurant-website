@@ -40,7 +40,7 @@ public class AddressService {
     }
     public void setAddressToOrder(Order order){
         // TODO: User first address automaticly added to order it will be change and support multiple Address selection
-            order.setAddress(order.getUser().getAddresses().stream().findFirst().get());
+                order.setAddress(order.getUser().getAddresses().stream().findFirst().get());
             return;
 
 //        UUID addressUUID=null;
