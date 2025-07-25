@@ -46,38 +46,38 @@ public class DataInitializer {
        List<Ingredient> ingredientList= ingredientRepository.findAll();
        if(ingredientList.isEmpty()) {
            List<Ingredient> ingredients = List.of(
-                   new Ingredient("Tomatensauce", 10.0,1L),
-                   new Ingredient("Mozzarella", 20.0,1L),
-                   new Ingredient("Oregano", 30.0,1L),
-                   new Ingredient("Champignons", 40.0,1L),
-                   new Ingredient("Zwiebeln", 50.0,1L),
-                   new Ingredient("Feta", 30.0,1L),
-                   new Ingredient("Gorgonzola", 10.0,1L),
-                   new Ingredient("Schinken", 20.0,2L),
-                   new Ingredient("Pommes Frites", 0.0,2L),
-                   new Ingredient("Sardellen", 23.0,2L),
-                   new Ingredient("Kapern", 21.0,2L),
-                   new Ingredient("Meeresfrüchte", 15.0,2L),
-                   new Ingredient("frische Tomaten", 15.0,1L),
-                   new Ingredient("Oliven", 34.0,3L),
-                   new Ingredient("Basilikum", 15.0,3L),
-                   new Ingredient("Speck", 21.0,3L),
-                   new Ingredient("Ei", 34.0,3L),
-                   new Ingredient("Kebabfleisch", 15.0, 4L),
-                   new Ingredient("scharfe Salami", 0.0, 4L),
-                   new Ingredient("Peperoni", 21.0, 4L),
-                   new Ingredient("Artischocken", 15.0, 4L),
-                   new Ingredient("Thunfisch", 15.0, 4L),
-                   new Ingredient("Crevetten", 15.0, 4L),
-                   new Ingredient("Spinat", 11.0, 4L),
-                   new Ingredient("Rindfleisch", 0.0,1L),
-                   new Ingredient("Knoblauch", 1.0,1L),
-                   new Ingredient("Kräuterbutter", 0.0,1L),
-                   new Ingredient("Salami", 1.0,1L),
-                   new Ingredient("Curry", 23.0,1L),
-                   new Ingredient("Pouletgeschnetzeltes", 0.0,1L),
-                   new Ingredient("Ananas", 23.0,1L),
-                   new Ingredient("4 Käsesorten", 15.0,1L)
+                   new Ingredient("Tomatensauce", 0.0,1L),
+                   new Ingredient("Mozzarella", 0.0,1L),
+                   new Ingredient("Oregano", 0.0,1L),
+                   new Ingredient("Champignons", 1.0,1L),
+                   new Ingredient("Zwiebeln", 1.0,1L),
+                   new Ingredient("Feta", 1.0,1L),
+                   new Ingredient("Gorgonzola", 1.0,1L),
+                   new Ingredient("Schinken", 2.0,2L),
+                   new Ingredient("Pommes Frites", 3.0,2L),
+                   new Ingredient("Sardellen", 2.0,2L),
+                   new Ingredient("Kapern", 1.0,2L),
+                   new Ingredient("Meeresfrüchte", 3.0,2L),
+                   new Ingredient("frische Tomaten", 1.0,1L),
+                   new Ingredient("Oliven", 1.0,3L),
+                   new Ingredient("Basilikum", 1.0,3L),
+                   new Ingredient("Speck", 2.0,3L),
+                   new Ingredient("Ei", 2.0,3L),
+                   new Ingredient("Kebabfleisch", 3.0, 4L),
+                   new Ingredient("scharfe Salami", 2.0, 4L),
+                   new Ingredient("Peperoni", 1.0, 4L),
+                   new Ingredient("Artischocken", 1.0, 4L),
+                   new Ingredient("Thunfisch", 2.0, 4L),
+                   new Ingredient("Crevetten", 2.0, 4L),
+                   new Ingredient("Spinat", 1.0, 4L),
+                   new Ingredient("Rindfleisch", 3.0,1L),
+                   new Ingredient("Knoblauch", 0.0,1L),
+                   new Ingredient("Kräuterbutter", 1.0,1L),
+                   new Ingredient("Salami", 2.0,1L),
+                   new Ingredient("Curry", 0.0,1L),
+                   new Ingredient("Pouletgeschnetzeltes", 3.0,1L),
+                   new Ingredient("Ananas", 1.0,1L),
+                   new Ingredient("4 Käsesorten", 3.0,1L)
            );
 
            ingredientRepository.saveAll(ingredients);
@@ -111,7 +111,7 @@ public class DataInitializer {
 if (categoryRepository.findAll().isEmpty()){
     List<Categories> categoriesList=new ArrayList<>();
     categoriesList.add(new Categories("Pizza"));
-    categoriesList.add(new Categories("Pizza Big"));
+    categoriesList.add(new Categories("Pizza 40cm"));
     categoriesList.add(new Categories("Pide"));
     categoriesList.add(new Categories("Warme Snacks"));
     categoriesList.add(new Categories("Salate"));
