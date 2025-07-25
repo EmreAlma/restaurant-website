@@ -537,190 +537,51 @@ if (categoryRepository.findAll().isEmpty()){
                             ingredientRepository.findByName("Tomatensauce").orElseThrow(),
                             ingredientRepository.findByName("Mozzarella").orElseThrow(),
                             ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Grüner Salat", null, 9.00,  "/images/products/salat-1.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Gemischter Salat", null, 13.00,  "/images/products/salat-2.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Thonsalat", null, 14.00,  "/images/products/salat-3.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Pouletsalat", null, 15.00,  "/images/products/salat-4.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Kebabsalat", null, 15.00,  "/images/products/salat-5.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Falafelsalat", null, 14.00,  "/images/products/salat-6.jpg", 5L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Tiramisu", null, 8.00,  "/images/products/dessert-1.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Schoggimousse", null, 8.00,  "/images/products/dessert-2.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Kokosnuss", null, 9.00,  "/images/products/dessert-3.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Limone Glace", null, 9.00,  "/images/products/dessert-4.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coppa Spagnola (Kirsch, 100ml)", null, 10.00,  "/images/products/dessert-5.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coppa Café (90ml)", null, 10.00,  "/images/products/dessert-6.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coppa Stracciatella (100ml)", null, 10.00,  "/images/products/dessert-7.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coppa Pistacchio (100ml)", null, 10.00,  "/images/products/dessert-8.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Kinderglace Panda (Vanille)", null, 7.00,  "/images/products/dessert-9.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Kinderglace Pingu (Schokolade)", null, 7.00,  "/images/products/dessert-10.jpg", 6L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coca-Cola 0,6L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-1.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coca-Cola 1,6L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-2.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coca-Cola Zero 0,6L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-3.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Coca-Cola Zero 1,6L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-4.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Rivella Rot 0,6L", null, 4.00,  "/images/products/drink-5.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Rivella Rot 1,6L", null, 7.00,  "/images/products/drink-6.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Fanta 0,6L", null, 4.00, "/images/products/drink-7.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Fanta 1,6L", null, 7.00, "/images/products/drink-8.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Fanta Mango 0,6L", null, 4.00,  "/images/products/drink-9.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Fanta Mango 1,6L", null, 7.00,  "/images/products/drink-10.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Ice Tea Peach 0,6L", null, 4.00,  "/images/products/drink-11.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Ice Tea Peach 1,6L", null, 7.00,  "/images/products/drink-12.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Ice Tea Lemon 0,6L", "Enthält Koffein (25,0 mg/100 ml)", 4.00,  "/images/products/drink-13.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Ice Tea Lemon 1,6L", "Enthält Koffein (25,0 mg/100 ml)", 7.00,  "/images/products/drink-14.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Uludag Limonada 0,6L", null, 4.00,  "/images/products/drink-15.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Uludag Orange 0,6L", null, 4.00,  "/images/products/drink-16.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Apfelschorle 0,6L", null, 4.00,  "/images/products/drink-17.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Valser Classic 0,6L", null, 4.00,  "/images/products/drink-18.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Valser Classic 1,6L", null, 7.00,  "/images/products/drink-19.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Valser Silence 0,6L", null, 4.00,  "/images/products/drink-20.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Red Bull 0,26L", "Hoher Koffeingehalt (32,0 mg/100 ml)", 5.00,  "/images/products/drink-21.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Monster Energy 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-22.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Monster Zero 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-23.jpg", 7L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Heineken 0,6L", "5% vol", 5.00,  "/images/products/alcohol-1.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Feldschlösschen 0,6L", "5% vol", 5.00,  "/images/products/alcohol-2.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Smirnoff ICE 0,276L", "4% vol", 6.00,  "/images/products/alcohol-3.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Dole du Valais 0,6L", "Rotwein, 13% vol", 18.00,  "/images/products/alcohol-4.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Nero d'Avola 0,76L", "Rotwein, 13% vol", 24.00,  "/images/products/alcohol-5.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Fendant du Valais 0,6L", "Weisswein, 13% vol", 18.00,  "/images/products/alcohol-6.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
-                    new Product("Rosé du Gamay 0,6L", "Roséwein, 13% vol", 18.00,  "/images/products/alcohol-7.jpg", 8L).withDefaultIngredients(List.of(
-                            ingredientRepository.findByName("Tomatensauce").orElseThrow(),
-                            ingredientRepository.findByName("Mozzarella").orElseThrow(),
-                            ingredientRepository.findByName("Oregano").orElseThrow())),
+                    new Product("Grüner Salat", null, 9.00,  "/images/products/salat-1.jpg", 5L),
+                    new Product("Gemischter Salat", null, 13.00,  "/images/products/salat-2.jpg", 5L),
+                    new Product("Caprese Salat", null, 14.00,  "/images/products/salat-3.jpg", 5L),
+                    new Product("Thonsalat", null, 14.00,  "/images/products/salat-3.jpg", 5L),
+                    new Product("Griechischer Salat", null, 14.00,  "/images/products/salat-6.jpg", 5L),
+                    new Product("Tiramisu", null, 8.00,  "/images/products/dessert-1.jpg", 6L),
+                    new Product("Schoggimousse", null, 8.00,  "/images/products/dessert-2.jpg", 6L),
+                    new Product("Kokosnuss", null, 9.00,  "/images/products/dessert-3.jpg", 6L),
+                    new Product("Limone Glace", null, 9.00,  "/images/products/dessert-4.jpg", 6L),
+                    new Product("Coppa Spagnola (Kirsch, 100ml)", null, 10.00,  "/images/products/dessert-5.jpg", 6L),
+                    new Product("Coppa Café (90ml)", null, 10.00,  "/images/products/dessert-6.jpg", 6L),
+                    new Product("Coppa Stracciatella (100ml)", null, 10.00,  "/images/products/dessert-7.jpg", 6L),
+                    new Product("Coppa Pistacchio (100ml)", null, 10.00,  "/images/products/dessert-8.jpg", 6L),
+                    new Product("Kinderglace Panda (Vanille)", null, 7.00,  "/images/products/dessert-9.jpg", 6L),
+                    new Product("Kinderglace Pingu (Schokolade)", null, 7.00,  "/images/products/dessert-10.jpg", 6L),
+                    new Product("Coca-Cola 0,6L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-1.jpg", 7L),
+                    new Product("Coca-Cola 1,6L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-2.jpg", 7L),
+                    new Product("Coca-Cola Zero 0,6L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-3.jpg", 7L),
+                    new Product("Coca-Cola Zero 1,6L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-4.jpg", 7L),
+                    new Product("Rivella Rot 0,6L", null, 4.00,  "/images/products/drink-5.jpg", 7L),
+                    new Product("Rivella Rot 1,6L", null, 7.00,  "/images/products/drink-6.jpg", 7L),
+                    new Product("Fanta 0,6L", null, 4.00, "/images/products/drink-7.jpg", 7L),
+                    new Product("Fanta 1,6L", null, 7.00, "/images/products/drink-8.jpg", 7L),
+                    new Product("Fanta Mango 0,6L", null, 4.00,  "/images/products/drink-9.jpg", 7L),
+                    new Product("Fanta Mango 1,6L", null, 7.00,  "/images/products/drink-10.jpg", 7L),
+                    new Product("Ice Tea Peach 0,6L", null, 4.00,  "/images/products/drink-11.jpg", 7L),
+                    new Product("Ice Tea Peach 1,6L", null, 7.00,  "/images/products/drink-12.jpg", 7L),
+                    new Product("Ice Tea Lemon 0,6L", "Enthält Koffein (25,0 mg/100 ml)", 4.00,  "/images/products/drink-13.jpg", 7L),
+                    new Product("Ice Tea Lemon 1,6L", "Enthält Koffein (25,0 mg/100 ml)", 7.00,  "/images/products/drink-14.jpg", 7L),
+                    new Product("Uludag Limonada 0,6L", null, 4.00,  "/images/products/drink-15.jpg", 7L),
+                    new Product("Uludag Orange 0,6L", null, 4.00,  "/images/products/drink-16.jpg", 7L),
+                    new Product("Apfelschorle 0,6L", null, 4.00,  "/images/products/drink-17.jpg", 7L),
+                    new Product("Valser Classic 0,6L", null, 4.00,  "/images/products/drink-18.jpg", 7L),
+                    new Product("Valser Classic 1,6L", null, 7.00,  "/images/products/drink-19.jpg", 7L),
+                    new Product("Valser Silence 0,6L", null, 4.00,  "/images/products/drink-20.jpg", 7L),
+                    new Product("Red Bull 0,26L", "Hoher Koffeingehalt (32,0 mg/100 ml)", 5.00,  "/images/products/drink-21.jpg", 7L),
+                    new Product("Monster Energy 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-22.jpg", 7L),
+                    new Product("Monster Zero 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-23.jpg", 7L),
+                    new Product("Heineken 0,6L", "5% vol", 5.00,  "/images/products/alcohol-1.jpg", 8L),
+                    new Product("Feldschlösschen 0,6L", "5% vol", 5.00,  "/images/products/alcohol-2.jpg", 8L),
+                    new Product("Smirnoff ICE 0,276L", "4% vol", 6.00,  "/images/products/alcohol-3.jpg", 8L),
+                    new Product("Dole du Valais 0,6L", "Rotwein, 13% vol", 18.00,  "/images/products/alcohol-4.jpg", 8L),
+                    new Product("Nero d'Avola 0,76L", "Rotwein, 13% vol", 24.00,  "/images/products/alcohol-5.jpg", 8L),
+                    new Product("Fendant du Valais 0,6L", "Weisswein, 13% vol", 18.00,  "/images/products/alcohol-6.jpg", 8L),
+                    new Product("Rosé du Gamay 0,6L", "Roséwein, 13% vol", 18.00,  "/images/products/alcohol-7.jpg", 8L),
                     new Product("Vodka 0,8L", "38% vol", 36.00,  "/images/products/alcohol-8.jpg", 8L)
             );
             productRepository.saveAll(products);
