@@ -2,70 +2,83 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-// 1. Create the context
 const CartContext = createContext();
 
-// 2. Create the provider component
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Add cart from the localstorage
+  // (opsiyonel) persist etmek istersen:
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-    }
+    try {
+      const stored = localStorage.getItem("cart");
+      if (stored) setCartItems(JSON.parse(stored));
+    } catch {}
   }, []);
 
-  // when chart change add to  localStorage
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    try {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    } catch {}
   }, [cartItems]);
 
-  // Add a product to the cart with an optional size
-  const addToCart = (product) => {
+  const addToCart = (product, size = "default") => {
+    // extraPrice, ingredientsToAdd/Remove varsa kullan; yoksa 0 ve boş kabul et
+    const extraPrice =
+      product.extraPrice ??
+      (product.ingredientsToAdd?.reduce((s, i) => s + (i.price ?? 0), 0) ?? 0);
+
     setCartItems((prev) => [
       ...prev,
-      { ...product, quantity: 1, note: "" },
+      {
+        ...product,
+        size,
+        quantity: 1,
+        note: product.note ?? "",
+        ingredientsToAdd: product.ingredientsToAdd ?? [],
+        ingredientsToRemove: product.ingredientsToRemove ?? [],
+        extraPrice, // adet yok: 1 kabul
+      },
     ]);
   };
 
-  // Remove a product from the cart by its ID
-  const removeFromCart = (productId) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== productId));
+  const removeFromCart = (cartItemIndex) => {
+    setCartItems((prev) => prev.filter((_, idx) => idx !== cartItemIndex));
   };
 
-  // Clear all items from the cart
   const clearCart = () => {
     setCartItems([]);
   };
-  const updateQuantity = (productId, amount) => {
-  setCartItems((prev) =>
-    prev.map((item) =>
-      item.id === productId
-        ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-        : item
-    )
-  );
-};
 
-  const updateNote = (productId, note) => {
+  const updateQuantity = (cartItemIndex, amount) => {
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === productId ? { ...item, note } : item
+      prev.map((item, idx) =>
+        idx === cartItemIndex
+          ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+          : item
       )
     );
   };
 
+  const updateNote = (cartItemIndex, note) => {
+    setCartItems((prev) =>
+      prev.map((item, idx) => (idx === cartItemIndex ? { ...item, note } : item))
+    );
+  };
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart, updateQuantity, updateNote, setCartItems}}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        updateQuantity,
+        updateNote,
+      }}
     >
       {children}
     </CartContext.Provider>
   );
 };
 
-// 3. Custom hook to use the cart context
 export const useCart = () => useContext(CartContext);
