@@ -30,26 +30,23 @@ const CheckoutPage = () => {
     e.preventDefault();
 
     const totalPrice = cartItems.reduce(
-      (total, item) =>
-        total + ((item.price ?? 0) + (item.extraPrice ?? 0)) * item.quantity,
-      0
+        (total, item) =>
+            total + ((item.price ?? 0) + (item.extraPrice ?? 0)) * item.quantity,
+        0
     );
 
     const orderPayload = {
       totalPrice: parseFloat(totalPrice.toFixed(2)),
       address: {
-        fullName: `${user.firstName} ${user.lastName}`,
         street: user.address?.[0]?.street,
         postalCode: user.address?.[0]?.postalCode,
         city: user.address?.[0]?.city,
       },
       orderItems: cartItems.map((item) => ({
-        product: { id: item.id },
+        productId: item.id,
         quantity: item.quantity,
-        ingredientsToAdd:
-          item.ingredientsToAdd?.map((i) => ({ id: i.id })) ?? [],
-        ingredientsToRemove:
-          item.ingredientsToRemove?.map((i) => ({ id: i.id })) ?? [],
+        ingredientsToAdd: item.ingredientsToAdd?.map((i) => i.id) ?? [],
+        ingredientsToRemove: item.ingredientsToRemove?.map((i) => i.id) ?? [],
       })),
       note: comment,
     };
@@ -57,15 +54,15 @@ const CheckoutPage = () => {
     try {
       const token = user?.token;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(orderPayload),
-        }
+          `${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(orderPayload),
+          }
       );
 
       if (!response.ok) {
