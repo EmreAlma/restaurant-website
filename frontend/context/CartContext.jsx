@@ -2,27 +2,32 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-const CartContext = createContext();
+const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [cartOpen, setCartOpen] = useState(false);
 
-  // (opsiyonel) persist etmek istersen:
+  // İlk yüklemede localStorage'tan oku
   useEffect(() => {
     try {
       const stored = localStorage.getItem("cart");
       if (stored) setCartItems(JSON.parse(stored));
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }, []);
 
+  // Her değişimde localStorage'a yaz
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(cartItems));
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }, [cartItems]);
 
   const addToCart = (product, size = "default") => {
-    // extraPrice, ingredientsToAdd/Remove varsa kullan; yoksa 0 ve boş kabul et
     const extraPrice =
       product.extraPrice ??
       (product.ingredientsToAdd?.reduce((s, i) => s + (i.price ?? 0), 0) ?? 0);
@@ -36,9 +41,10 @@ export const CartProvider = ({ children }) => {
         note: product.note ?? "",
         ingredientsToAdd: product.ingredientsToAdd ?? [],
         ingredientsToRemove: product.ingredientsToRemove ?? [],
-        extraPrice, // adet yok: 1 kabul
+        extraPrice,
       },
     ]);
+    setCartOpen(true); // ekleyince otomatik açmak istersen (opsiyonel)
   };
 
   const removeFromCart = (cartItemIndex) => {
@@ -47,6 +53,11 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCartItems([]);
+    try {
+      localStorage.removeItem("cart");
+    } catch {
+      /* ignore */
+    }
   };
 
   const updateQuantity = (cartItemIndex, amount) => {
@@ -74,6 +85,9 @@ export const CartProvider = ({ children }) => {
         clearCart,
         updateQuantity,
         updateNote,
+        setCartItems,
+        cartOpen,
+        setCartOpen,
       }}
     >
       {children}

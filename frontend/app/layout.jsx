@@ -1,5 +1,6 @@
 import "./globals.css";
 import { CartProvider } from "../context/CartContext";
+import { AuthProvider } from "../context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,11 +19,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen flex flex-col pt-20">
-        <CartProvider>
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import LoginModal from "../../components/LoginModal";
 
 const CheckoutPage = () => {
-  const { cartItems, clearCart } = useCart();
+  const { cartItems, clearCart, setCartOpen } = useCart();
   const router = useRouter();
+
   const [user, setUser] = useState(null);
   const [comment, setComment] = useState("");
   const [showLogin, setShowLogin] = useState(false);
@@ -30,18 +31,25 @@ const CheckoutPage = () => {
     e.preventDefault();
 
     const totalPrice = cartItems.reduce(
-        (total, item) =>
-            total + ((item.price ?? 0) + (item.extraPrice ?? 0)) * item.quantity,
-        0
+      (total, item) =>
+        total + ((item.price ?? 0) + (item.extraPrice ?? 0)) * item.quantity,
+      0
     );
+
+    // user.address backend’den dizi veya tek obje dönebiliyor olabilir
+    const primaryAddr = Array.isArray(user?.address)
+      ? user.address[0]
+      : user?.address;
 
     const orderPayload = {
       totalPrice: parseFloat(totalPrice.toFixed(2)),
-      address: {
-        street: user.address?.[0]?.street,
-        postalCode: user.address?.[0]?.postalCode,
-        city: user.address?.[0]?.city,
-      },
+      address: primaryAddr
+        ? {
+            street: primaryAddr.street,
+            postalCode: primaryAddr.postalCode,
+            city: primaryAddr.city,
+          }
+        : null,
       orderItems: cartItems.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
@@ -54,15 +62,15 @@ const CheckoutPage = () => {
     try {
       const token = user?.token;
       const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(orderPayload),
-          }
+        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(orderPayload),
+        }
       );
 
       if (!response.ok) {
@@ -71,7 +79,11 @@ const CheckoutPage = () => {
 
       await response.json();
       alert("Vielen Dank für Ihre Bestellung!");
+
+      // >>> Sepeti kesin olarak temizle
       clearCart();
+      setCartOpen(false);
+
       router.push("/");
     } catch (error) {
       console.error("Bestellungsfehler:", error);
@@ -107,94 +119,116 @@ const CheckoutPage = () => {
       {user && (
         <div className="mb-6 space-y-1">
           <h2 className="text-lg font-semibold">👤 Kundendaten</h2>
-          <p>Name: {user.firstName} {user.lastName}</p>
+          <p>
+            Name: {user.firstName} {user.lastName}
+          </p>
           <p>Telefon: {user.phoneNumber}</p>
-          {user.address && user.address.length > 0 ? (
-            <p>Adresse: {user.address[0].street}, {user.address[0].postalCode} {user.address[0].city}</p>
+          {Array.isArray(user.address) && user.address.length > 0 ? (
+            <p>
+              Adresse: {user.address[0].street}, {user.address[0].postalCode}{" "}
+              {user.address[0].city}
+            </p>
+          ) : user.address ? (
+            <p>
+              Adresse: {user.address.street}, {user.address.postalCode}{" "}
+              {user.address.city}
+            </p>
           ) : (
-            <p className="text-sm text-gray-500 italic">Keine Adresse vorhanden.</p>
+            <p className="text-sm text-gray-500 italic">
+              Keine Adresse vorhanden.
+            </p>
           )}
         </div>
       )}
 
       <div className="mb-6">
         <h2 className="text-lg font-semibold">🛒 Deine Produkte</h2>
-        <ul className="space-y-2">
-          {cartItems.map((item, index) => (
-            <li
-              key={index}
-              className="border p-2 rounded text-sm flex justify-between items-center"
-            >
-              <div>
-                <div className="font-medium">
-                  {item.name} x {item.quantity}
+        {cartItems.length === 0 ? (
+          <p className="text-sm text-gray-500 italic">
+            Dein Warenkorb ist leer.
+          </p>
+        ) : (
+          <ul className="space-y-2">
+            {cartItems.map((item, index) => (
+              <li
+                key={index}
+                className="border p-2 rounded text-sm flex justify-between items-center"
+              >
+                <div>
+                  <div className="font-medium">
+                    {item.name} x {item.quantity}
+                  </div>
+                  {item.ingredientsToAdd?.length > 0 && (
+                    <p className="text-xs text-gray-600 mt-1">
+                      +{" "}
+                      {item.ingredientsToAdd
+                        .map(
+                          (i) => `${i.name} (+${(i.price ?? 0).toFixed(2)} CHF)`
+                        )
+                        .join(", ")}
+                    </p>
+                  )}
+                  {item.ingredientsToRemove?.length > 0 && (
+                    <p className="text-xs text-gray-500 italic mt-1">
+                      – {item.ingredientsToRemove.map((i) => i.name).join(", ")}
+                    </p>
+                  )}
+                  {item.note && (
+                    <p className="text-xs italic mt-1">Wunsch: {item.note}</p>
+                  )}
                 </div>
-                {item.ingredientsToAdd?.length > 0 && (
-                  <p className="text-xs text-gray-600 mt-1">
-                    +{" "}
-                    {item.ingredientsToAdd
-                      .map(
-                        (i) => `${i.name} (+${(i.price ?? 0).toFixed(2)} CHF)`
-                      )
-                      .join(", ")}
-                  </p>
-                )}
-                {item.ingredientsToRemove?.length > 0 && (
-                  <p className="text-xs text-gray-500 italic mt-1">
-                    – {item.ingredientsToRemove.map((i) => i.name).join(", ")}
-                  </p>
-                )}
-                {item.note && (
-                  <p className="text-xs italic mt-1">Wunsch: {item.note}</p>
-                )}
-              </div>
-              <div className="font-semibold">
-                CHF{" "}
-                {(
-                  ((item.price ?? 0) + (item.extraPrice ?? 0)) *
-                  item.quantity
-                ).toFixed(2)}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="font-semibold">
+                  CHF{" "}
+                  {(
+                    ((item.price ?? 0) + (item.extraPrice ?? 0)) *
+                    item.quantity
+                  ).toFixed(2)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      <div className="mb-6 text-right font-bold">
-        Gesamt: CHF {total.toFixed(2)}
-      </div>
+      {cartItems.length > 0 && (
+        <>
+          <div className="mb-6 text-right font-bold">
+            Gesamt: CHF {total.toFixed(2)}
+          </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <textarea
-          name="comment"
-          placeholder="Zusätzliche Bemerkungen (optional)"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          maxLength={200}
-          rows="2"
-          className="w-full border p-2 rounded"
-        />
-        <p className="text-sm text-gray-500 text-right">
-          {comment.length}/200 Zeichen
-        </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <textarea
+              name="comment"
+              placeholder="Zusätzliche Bemerkungen (optional)"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              maxLength={200}
+              rows="2"
+              className="w-full border p-2 rounded"
+            />
+            <p className="text-sm text-gray-500 text-right">
+              {comment.length}/200 Zeichen
+            </p>
 
-        <div className="flex justify-between items-center">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="text-sm text-gray-600 hover:underline"
-          >
-            🔙 Zurück zum Warenkorb
-          </button>
+            <div className="flex justify-between items-center">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="text-sm text-gray-600 hover:underline"
+              >
+                🔙 Zurück zum Warenkorb
+              </button>
 
-          <button
-            type="submit"
-            className="bg-sunset text-white py-2 px-4 rounded hover:bg-opacity-90 transition"
-          >
-            Bestellung abschicken
-          </button>
-        </div>
-      </form>
+              <button
+                type="submit"
+                className="bg-sunset text-white py-2 px-4 rounded hover:bg-opacity-90 transition"
+              >
+                Bestellung abschicken
+              </button>
+            </div>
+          </form>
+        </>
+      )}
     </div>
   );
 };
