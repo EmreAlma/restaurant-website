@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import Cart from "./Cart";
+import CartDrawer from "./CartDrawer";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 
@@ -124,12 +125,7 @@ const Header = () => {
             </nav>
           </div>
         )}
-
-        {cartOpen && (
-          <div className="fixed top-20 right-4 z-50">
-            <Cart />
-          </div>
-        )}
+        <CartDrawer />
       </header>
 
       <LoginModal
