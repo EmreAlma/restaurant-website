@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import HomeSection from "../components/HomeSection";
 import CategorySection from "../components/CategorySection";
 import CategoryMenu from "../components/CategoryMenu";
-import DishesSection from "../components/DishesSection";
 import AboutSection from "../components/AboutSection";
 import ProductList from "../components/ProductList";
 import ReviewSection from "../components/ReviewSection";
@@ -22,7 +21,6 @@ export default function Home() {
         <CategorySection />
         <CategoryMenu onSelectCategory={setSelectedCategoryId} />
         <ProductList categoryId={selectedCategoryId} />
-        <DishesSection />
         <AboutSection />
         <ReviewSection />
       </main>

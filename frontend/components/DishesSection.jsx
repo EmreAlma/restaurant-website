@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 
 const DishesSection = () => {
   return (
@@ -7,7 +7,7 @@ const DishesSection = () => {
         Popular Dishes
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {/* Dish Card 1 */}
+        
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -44,7 +44,7 @@ const DishesSection = () => {
             </div>
           </div>
         </div>
-        {/* Dish Card 2 */}
+        
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -82,7 +82,7 @@ const DishesSection = () => {
           </div>
         </div>
 
-        {/* Dish Card 3 */}
+      
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -118,7 +118,7 @@ const DishesSection = () => {
           </div>
         </div>
 
-        {/* Dish Card 4 */}
+        
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -156,7 +156,7 @@ const DishesSection = () => {
           </div>
         </div>
 
-        {/* Dish Card 5 */}
+        
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -194,7 +194,7 @@ const DishesSection = () => {
           </div>
         </div>
 
-        {/* Dish Card 6 */}
+        
         <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105">
           <div className="relative">
             <img
@@ -234,4 +234,4 @@ const DishesSection = () => {
   );
 };
 
-export default DishesSection;
+export default DishesSection; */
