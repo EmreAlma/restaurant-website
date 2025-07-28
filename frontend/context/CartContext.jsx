@@ -1,30 +1,25 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const [cartOpen, setCartOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false); // drawer kontrolü hâlâ burada, ama otomatik açmıyoruz
 
-  // İlk yüklemede localStorage'tan oku
   useEffect(() => {
     try {
       const stored = localStorage.getItem("cart");
       if (stored) setCartItems(JSON.parse(stored));
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   }, []);
 
-  // Her değişimde localStorage'a yaz
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(cartItems));
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   }, [cartItems]);
 
   const addToCart = (product, size = "default") => {
@@ -44,7 +39,10 @@ export const CartProvider = ({ children }) => {
         extraPrice,
       },
     ]);
-    setCartOpen(true); // ekleyince otomatik açmak istersen (opsiyonel)
+
+    // ❌ Eskiden: setCartOpen(true);
+    // ✅ Artık sadece toast gösteriyoruz:
+    toast.success(`${product.name ?? "Produkt"} wurde zum Warenkorb hinzugefügt.`);
   };
 
   const removeFromCart = (cartItemIndex) => {
@@ -55,9 +53,7 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
     try {
       localStorage.removeItem("cart");
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   };
 
   const updateQuantity = (cartItemIndex, amount) => {
@@ -85,7 +81,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         updateQuantity,
         updateNote,
-        setCartItems,
+        setCartItems, // backward compat
         cartOpen,
         setCartOpen,
       }}
