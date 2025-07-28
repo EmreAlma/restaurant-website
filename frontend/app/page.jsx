@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import HomeSection from "../components/HomeSection";
-import CategorySection from "../components/CategorySection";
-import CategoryMenu from "../components/CategoryMenu";
+import CategorySection from "../components/CategorySection"
 import AboutSection from "../components/AboutSection";
-import ProductList from "../components/ProductList";
+import MenuSection from "../components/MenuSection";
 import ReviewSection from "../components/ReviewSection";
 
 export default function Home() {
@@ -16,8 +15,7 @@ export default function Home() {
       <main>
         <HomeSection />
         <CategorySection />
-        <CategoryMenu onSelectCategory={setSelectedCategoryId} />
-        <ProductList categoryId={selectedCategoryId} />
+        <MenuSection />
         <AboutSection />
         <ReviewSection />
       </main>
