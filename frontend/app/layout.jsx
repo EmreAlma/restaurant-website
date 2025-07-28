@@ -3,6 +3,7 @@ import { CartProvider } from "../context/CartContext";
 import { AuthProvider } from "../context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import RouteGuards from "@/components/RouteGuards";
 
 export const metadata = {
   title: "Pizza Oregano",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
+            <RouteGuards />
           </CartProvider>
         </AuthProvider>
       </body>

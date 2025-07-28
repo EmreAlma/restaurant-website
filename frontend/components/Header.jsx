@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
-import Cart from "./Cart";
 import CartDrawer from "./CartDrawer";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
@@ -18,7 +17,7 @@ const Header = () => {
   const { cartItems, cartOpen, setCartOpen } = useCart();
   const { user, logout } = useAuth();
 
-  const toggleNav = () => setNavActive(!navActive);
+  const toggleNav = () => setNavActive((p) => !p);
   const toggleCart = () => setCartOpen(!cartOpen);
 
   const handleLogout = () => {
@@ -34,6 +33,7 @@ const Header = () => {
             Pizza Oregano
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden md:flex space-x-6">
             {["home", "menu", "dishes", "about", "review"].map((section) => (
               <a
@@ -46,7 +46,17 @@ const Header = () => {
             ))}
           </nav>
 
+          {/* Right side */}
           <div className="flex items-center space-x-4">
+            {/* Mobile hamburger (opsiyonel) */}
+            <button
+              className="md:hidden text-2xl text-gray-600"
+              onClick={toggleNav}
+              aria-label="Toggle navigation"
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+
             {user ? (
               <div className="relative">
                 <button
@@ -99,6 +109,7 @@ const Header = () => {
             <button
               onClick={toggleCart}
               className="relative text-2xl text-sunset transition-colors duration-300 hover:text-jellyBeanBlue"
+              aria-label="Open cart"
             >
               <i className="fas fa-shopping-cart"></i>
               {cartItems.length > 0 && (
@@ -110,6 +121,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Mobile nav drawer (basit versiyon) */}
         {navActive && (
           <div className="md:hidden bg-white shadow-lg">
             <nav className="flex flex-col space-y-2 px-6 py-4">
@@ -118,6 +130,7 @@ const Header = () => {
                   key={section}
                   href={`#${section}`}
                   className="text-lg font-medium text-gray-600 hover:text-white hover:bg-jellyBeanBlue transition duration-300 px-3 py-2 rounded-lg"
+                  onClick={() => setNavActive(false)}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </a>
@@ -125,9 +138,12 @@ const Header = () => {
             </nav>
           </div>
         )}
-        <CartDrawer />
       </header>
 
+      {/* Slide-in cart drawer */}
+      <CartDrawer />
+
+      {/* Modals */}
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
