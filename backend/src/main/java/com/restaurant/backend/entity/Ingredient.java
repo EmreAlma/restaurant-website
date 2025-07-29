@@ -20,7 +20,7 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Categories category;
+    private IngredientCategories category;
 
     public Ingredient() {
     }
@@ -31,15 +31,15 @@ public class Ingredient {
     public Ingredient(String name, Double price, Long categoryid) {
         this.name = name;
         this.price = price;
-        this.category = new Categories();
+        this.category = new IngredientCategories();
         this.category.setId(categoryid);
     }
 
-    public Categories getCategory() {
+    public IngredientCategories getCategory() {
         return category;
     }
 
-    public void setCategory(Categories category) {
+    public void setCategory(IngredientCategories category) {
         this.category = category;
     }
 

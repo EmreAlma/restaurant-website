@@ -1,6 +1,7 @@
 package com.restaurant.backend.service;
 
 import com.restaurant.backend.entity.Ingredient;
+import com.restaurant.backend.entity.IngredientCategories;
 import com.restaurant.backend.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,9 @@ public class IngredientService {
 
     public List<Ingredient> findAll(){
         return ingredientRepository.findAll();
+    }
+
+    public List<Ingredient> getIngredientsByCategories(List<IngredientCategories> categories) {
+        return ingredientRepository.findByCategoryIn(categories);
     }
 }
