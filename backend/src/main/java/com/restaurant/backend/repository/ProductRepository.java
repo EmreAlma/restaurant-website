@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface ProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findByCategoryId(Long categoryId);
+    List<Product> findByName(String name);
+    List<Product> findByNameContainingIgnoreCase(String name);
 }

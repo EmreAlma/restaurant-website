@@ -4,6 +4,7 @@ import com.restaurant.backend.entity.Categories;
 import com.restaurant.backend.entity.Ingredient;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,9 +21,9 @@ public class ProductIngredients {
 
     private Categories category;
 
-   private List<Ingredient> ingredientstoAdd;
+   private List<Ingredient> ingredientstoAdd=new ArrayList<>();
 
-    private List<Ingredient> ingredientstoRemove;
+    private List<Ingredient> ingredientstoRemove=new ArrayList<>();
 
 
     public ProductIngredients() {

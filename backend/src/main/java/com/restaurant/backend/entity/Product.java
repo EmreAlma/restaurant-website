@@ -30,6 +30,16 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Categories category;
 
+    @ManyToMany
+    @JoinTable(
+            name = "product_ingredient_to_add_ingredient",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    @JsonIgnore
+    private List<Ingredient> ingredientToAdd = new ArrayList<>();
+
+
 
     @ManyToMany
     @JoinTable(
@@ -47,6 +57,15 @@ public class Product {
 
     public void setDefaultIngredients(List<Ingredient> defaultIngredients) {
         this.defaultIngredients = defaultIngredients;
+    }
+
+
+    public List<Ingredient> getIngredientToAdd() {
+        return ingredientToAdd;
+    }
+
+    public void setIngredientToAdd(List<Ingredient> ingredientToAdd) {
+        this.ingredientToAdd = ingredientToAdd;
     }
 
     public Categories getCategory() {

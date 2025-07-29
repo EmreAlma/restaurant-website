@@ -50,8 +50,8 @@ public class ProductService {
             pi.setImage(product.getImage());
             pi.setCategory(product.getCategory());
 
-
-            pi.setIngredientstoAdd(ingredients);
+            pi.getIngredientstoAdd().addAll(ingredients);
+            pi.getIngredientstoAdd().addAll(product.getIngredientToAdd());
             pi.setIngredientstoRemove(product.getDefaultIngredients());
 
             productIngredientsList.add(pi);

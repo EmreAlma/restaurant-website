@@ -12,4 +12,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
     List<Ingredient> findByCategoryId(Long categoryId);
     Optional<Ingredient> findByName(String name);
     List<Ingredient> findByCategoryIn(List<IngredientCategories> categories);
+    List<Ingredient> findByNameIn(List<String> names);
+
 }
