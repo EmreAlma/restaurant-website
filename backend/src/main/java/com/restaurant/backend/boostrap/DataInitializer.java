@@ -3,6 +3,7 @@ package com.restaurant.backend.boostrap;
 import com.restaurant.backend.entity.*;
 import com.restaurant.backend.enums.UserRoles;
 import com.restaurant.backend.repository.CategoryRepository;
+import com.restaurant.backend.repository.IngredientCategoriesRepository;
 import com.restaurant.backend.repository.IngredientRepository;
 import com.restaurant.backend.repository.ProductRepository;
 import com.restaurant.backend.repository.UserRepository;
@@ -18,119 +19,166 @@ public class DataInitializer {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-     private final UserRepository userRepository;
-     private final PasswordEncoder passwordEncoder;
-     private final IngredientRepository ingredientRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IngredientRepository ingredientRepository;
+    private final IngredientCategoriesRepository ingredientCategoriesRepository;
 
-    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, IngredientRepository ingredientRepository) {
+    public DataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, IngredientRepository ingredientRepository, IngredientCategoriesRepository ingredientCategoriesRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.ingredientRepository = ingredientRepository;
+        this.ingredientCategoriesRepository = ingredientCategoriesRepository;
     }
 
     @PostConstruct
     public void initData() {
 
         inertAdminUser();
+        IngridientCategory();
         initCategories();
         initIngredient();
         initProducts();
 
-        
     }
 
-    private void initIngredient(){
-        
-       List<Ingredient> ingredientList= ingredientRepository.findAll();
-       if(ingredientList.isEmpty()) {
-           List<Ingredient> ingredients = List.of(
-                   new Ingredient("Tomatensauce", 0.0,1L),
-                   new Ingredient("Mozzarella", 0.0,1L),
-                   new Ingredient("Oregano", 0.0,1L),
-                   new Ingredient("Champignons", 1.0,1L),
-                   new Ingredient("Zwiebeln", 1.0,1L),
-                   new Ingredient("Feta", 1.0,1L),
-                   new Ingredient("Gorgonzola", 1.0,1L),
-                   new Ingredient("Schinken", 2.0,1L),
-                   new Ingredient("Pommes Frites", 3.0,1L),
-                   new Ingredient("Sardellen", 2.0,1L),
-                   new Ingredient("Kapern", 1.0,1L),
-                   new Ingredient("Meeresfrüchte", 3.0,1L),
-                   new Ingredient("Frische Tomaten", 1.0,1L),
-                   new Ingredient("Oliven", 1.0,1L),
-                   new Ingredient("Basilikum", 1.0,1L),
-                   new Ingredient("Speck", 2.0,1L),
-                   new Ingredient("Ei", 2.0,1L),
-                   new Ingredient("Kebabfleisch", 3.0, 1L),
-                   new Ingredient("scharfe Salami", 2.0, 1L),
-                   new Ingredient("Peperoni", 1.0, 1L),
-                   new Ingredient("Artischocken", 1.0, 1L),
-                   new Ingredient("Thunfisch", 2.0, 1L),
-                   new Ingredient("Crevetten", 2.0, 1L),
-                   new Ingredient("Spinat", 1.0, 1L),
-                   new Ingredient("Rindfleisch", 3.0,1L),
-                   new Ingredient("Knoblauch", 0.0,1L),
-                   new Ingredient("Kräuterbutter", 0.0,1L),
-                   new Ingredient("Salami", 2.0,1L),
-                   new Ingredient("Pouletgeschnetzeltes", 3.0,1L),
-                   new Ingredient("Ananas", 1.0,1L),
-                   new Ingredient("Cocktail", 0.0, 4L ),
-                   new Ingredient("Joghurt", 0.0, 4L),
-                   new Ingredient("Curry", 0.0, 4L),
-                   new Ingredient("Samurai", 0.0, 4L),
-                   new Ingredient("Ketchup", 0.0, 4L),
-                   new Ingredient("Mayonnaise", 0.0, 4L),
-                   new Ingredient("Barbecue", 0.0, 4L),
-                   new Ingredient("Scharf", 0.0, 4L),
-                   new Ingredient("Fransözisch", 0.0, 4L),
-                   new Ingredient("Italienisch", 0.0, 4L)
+    private void IngridientCategory() {
+        if (ingredientCategoriesRepository.findAll().isEmpty()) {
+            List<IngredientCategories> categoriesList = new ArrayList<>();
+            categoriesList.add(new IngredientCategories("Pizza"));
+            categoriesList.add(new IngredientCategories("Pizza 40cm"));
+            categoriesList.add(new IngredientCategories("Pide"));
+            categoriesList.add(new IngredientCategories("Warme Snacks"));
+            categoriesList.add(new IngredientCategories("Salate"));
+            categoriesList.add(new IngredientCategories("Dessert"));
+            categoriesList.add(new IngredientCategories("Getränke"));
+            categoriesList.add(new IngredientCategories("Biere & Weine"));
 
-           );
-
-           ingredientRepository.saveAll(ingredients);
-       }
+            ingredientCategoriesRepository.saveAll(categoriesList);
+        }
 
     }
-    private void inertAdminUser(){
-        List<User> users=userRepository.findAll();
-      boolean isAdminExist=   users.stream().anyMatch(user -> UserRoles.OWNER.equals(user.getRole()));
-      if(!isAdminExist){
-          User adminUser=new User();
-          adminUser.setRole(UserRoles.OWNER);
-          adminUser.setLastName("admin");
-          adminUser.setFirstName("admin");
-          adminUser.setUsername("admin");
-          adminUser.setPassword(passwordEncoder.encode("admin"));
 
-          Address address = new Address();
-          address.setCity("Rohrbach");
-          address.setStreet("Hauptstrasse 15");
-          address.setPostalCode("");
-          address.setUser(adminUser);
-          adminUser.getAddresses().add(address);
-          userRepository.save(adminUser);
+    private void initIngredient() {
 
-      }
+        List<Ingredient> ingredientList = ingredientRepository.findAll();
+        if (ingredientList.isEmpty()) {
+            List<Ingredient> ingredients = List.of(
+                    new Ingredient("Tomatensauce", 0.0, 1L),
+                    new Ingredient("Mozzarella", 0.0, 1L),
+                    new Ingredient("Oregano", 0.0, 1L),
+                    new Ingredient("Champignons", 1.0, 1L),
+                    new Ingredient("Zwiebeln", 1.0, 1L),
+                    new Ingredient("Feta", 1.0, 1L),
+                    new Ingredient("Gorgonzola", 1.0, 1L),
+                    new Ingredient("Schinken", 2.0, 1L),
+                    new Ingredient("Pommes Frites", 3.0, 1L),
+                    new Ingredient("Sardellen", 2.0, 1L),
+                    new Ingredient("Kapern", 1.0, 1L),
+                    new Ingredient("Meeresfrüchte", 3.0, 1L),
+                    new Ingredient("Frische Tomaten", 1.0, 1L),
+                    new Ingredient("Oliven", 1.0, 1L),
+                    new Ingredient("Basilikum", 1.0, 1L),
+                    new Ingredient("Speck", 2.0, 1L),
+                    new Ingredient("Ei", 2.0, 1L),
+                    new Ingredient("Kebabfleisch", 3.0, 1L),
+                    new Ingredient("scharfe Salami", 2.0, 1L),
+                    new Ingredient("Peperoni", 1.0, 1L),
+                    new Ingredient("Artischocken", 1.0, 1L),
+                    new Ingredient("Thunfisch", 2.0, 1L),
+                    new Ingredient("Crevetten", 2.0, 1L),
+                    new Ingredient("Spinat", 1.0, 1L),
+                    new Ingredient("Rindfleisch", 3.0, 1L),
+                    new Ingredient("Knoblauch", 0.0, 1L),
+                    new Ingredient("Kräuterbutter", 0.0, 1L),
+                    new Ingredient("Salami", 2.0, 1L),
+                    new Ingredient("Pouletgeschnetzeltes", 3.0, 1L),
+                    new Ingredient("Ananas", 1.0, 1L),
+                    new Ingredient("Cocktail", 0.0, 4L),
+                    new Ingredient("Joghurt", 0.0, 4L),
+                    new Ingredient("Curry", 0.0, 4L),
+                    new Ingredient("Samurai", 0.0, 4L),
+                    new Ingredient("Ketchup", 0.0, 4L),
+                    new Ingredient("Mayonnaise", 0.0, 4L),
+                    new Ingredient("Barbecue", 0.0, 4L),
+                    new Ingredient("Scharf", 0.0, 4L),
+                    new Ingredient("Fransözisch", 0.0, 4L),
+                    new Ingredient("Italienisch", 0.0, 4L)
+
+            );
+
+            ingredientRepository.saveAll(ingredients);
+        }
+
+    }
+
+    private void inertAdminUser() {
+        List<User> users = userRepository.findAll();
+        boolean isAdminExist = users.stream().anyMatch(user -> UserRoles.OWNER.equals(user.getRole()));
+        if (!isAdminExist) {
+            User adminUser = new User();
+            adminUser.setRole(UserRoles.OWNER);
+            adminUser.setLastName("admin");
+            adminUser.setFirstName("admin");
+            adminUser.setUsername("admin");
+            adminUser.setPassword(passwordEncoder.encode("admin"));
+
+            Address address = new Address();
+            address.setCity("Rohrbach");
+            address.setStreet("Hauptstrasse 15");
+            address.setPostalCode("");
+            address.setUser(adminUser);
+            adminUser.getAddresses().add(address);
+            userRepository.save(adminUser);
+
+        }
 
     }
 
     private void initCategories() {
-if (categoryRepository.findAll().isEmpty()){
-    List<Categories> categoriesList=new ArrayList<>();
-    categoriesList.add(new Categories("Pizza"));
-    categoriesList.add(new Categories("Pizza 40cm"));
-    categoriesList.add(new Categories("Pide"));
-    categoriesList.add(new Categories("Warme Snacks"));
-    categoriesList.add(new Categories("Salate"));
-    categoriesList.add(new Categories("Dessert"));
-    categoriesList.add(new Categories("Getränke"));
-    categoriesList.add(new Categories("Biere & Weine"));
+        if (categoryRepository.findAll().isEmpty()) {
+            List<IngredientCategories> allIngredientCategories = ingredientCategoriesRepository.findAll();
 
-    categoryRepository.saveAll(categoriesList);
-}
+            IngredientCategories dessert = allIngredientCategories.stream()
+                    .filter(ic -> ic.getCategoryName().equalsIgnoreCase("Dessert"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Cant Found Category"));
+
+            IngredientCategories salate = allIngredientCategories.stream()
+                    .filter(ic -> ic.getCategoryName().equalsIgnoreCase("Salate"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Cant Found Category"));
+
+            IngredientCategories pizza = allIngredientCategories.stream()
+                    .filter(ic -> ic.getCategoryName().equalsIgnoreCase("Pizza"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Cant Found Category"));
+
+            IngredientCategories pizza40 = allIngredientCategories.stream()
+                    .filter(ic -> ic.getCategoryName().equalsIgnoreCase("Pizza 40cm"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Cant Found Category"));
+
+
+
+            List<IngredientCategories> pizzaIngredientCategories = new ArrayList<>(allIngredientCategories);
+
+            List<Categories> categoriesList = new ArrayList<>();
+            categoriesList.add(new Categories("Pizza", List.of(pizza)));
+            categoriesList.add(new Categories("Pizza 40cm", List.of(pizza40)));
+            categoriesList.add(new Categories("Pide", pizzaIngredientCategories));
+            categoriesList.add(new Categories("Warme Snacks", pizzaIngredientCategories));
+            categoriesList.add(new Categories("Salate", List.of(salate)));
+            categoriesList.add(new Categories("Dessert", List.of(dessert)));
+            categoriesList.add(new Categories("Getränke", new ArrayList<>()));
+            categoriesList.add(new Categories("Biere & Weine", new ArrayList<>()));
+
+            categoryRepository.saveAll(categoriesList);
+        }
     }
+
 
     private void initProducts() {
         if (productRepository.findAll().isEmpty()) {
@@ -211,84 +259,84 @@ if (categoryRepository.findAll().isEmpty()){
                     new Product("Pizza Vegetaria ", "Tomatensauce, Mozzarella, Oregano und drei Zutaten nach Wahl", 31.5, "/images/products/pizza-38.jpg", 2L),
                     new Product("Wunschpizza ", "Tomatensauce, Mozzarella, Oregano und vier Zutaten nach Wahl", 23.5, "/images/products/pizza-39.jpg", 1L),
                     new Product("Wunschpizza ", "Tomatensauce, Mozzarella, Oregano und vier Zutaten nach Wahl", 38.5, "/images/products/pizza-39.jpg", 2L),
-                    new Product("Pide Gemüse", "Mozzarella, Peperoni, Pilze und Oliven", 19.50,  "/images/products/pide-1.jpg", 3L),
-                    new Product("Pide Kalbfleisch", "Mozzarella, Kalbfleisch, Zwiebeln, Peperoni und Kräuterbutter", 21.50,  "/images/products/pide-2.jpg", 3L),
-                    new Product("Pide Spinat", "Mozzarella, Spinat und Ei", 19.50,  "/images/products/pide-3.jpg", 3L),
-                    new Product("Pide Kebab", "Mozzarella und Kebabfleisch", 19.50,  "/images/products/pide-4.jpg", 3L),
-                    new Product("Chicken Nuggets Box (8 Stück)", "Mit Pommes Frites und Sauce nach Wahl", 17.50,  "/images/products/snack-1.jpg", 4L),
-                    new Product("Chicken Nuggets Teller (8 Stück)", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 21.50,  "/images/products/snack-2.jpg", 4L),
-                    new Product("Pouletflügeli Teller (6 Stück)", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50,  "/images/products/snack-3.jpg", 4L),
-                    new Product("Falafel Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 19.50,  "/images/products/snack-4.jpg", 4L),
-                    new Product("Kebab Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50,  "/images/products/snack-5.jpg", 4L),
-                    new Product("Eglifilet Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50,  "/images/products/snack-6.jpg", 4L),
-                    new Product("Eglifilet Box", "Mit Pommes Frites und Sauce nach Wahl", 18.50,  "/images/products/snack-7.jpg", 4L),
-                    new Product("Döner Box", "Mit Sauce nach Wahl", 14.00,  "/images/products/snack-8.jpg", 4L),
-                    new Product("Döner Box XXL", "Mit Sauce nach Wahl", 18.00,  "/images/products/snack-9.jpg", 4L),
-                    new Product("Pommes Frites", "Mit Sauce nach Wahl", 8.00,  "/images/products/snack-10.jpg", 4L),
-                    new Product("Pommes Frites XXL", "Mit Sauce nach Wahl", 12.00,  "/images/products/snack-11.jpg", 4L),
-                    new Product("Kebab im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 13.00,  "/images/products/snack-12.jpg", 4L),
-                    new Product("Kebab im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 14.00,  "/images/products/snack-13.jpg", 4L),
-                    new Product("Kebab Cheese im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 15.00,  "/images/products/snack-14.jpg", 4L),
-                    new Product("Kebab Cheese im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 16.00,  "/images/products/snack-15.jpg", 4L),
-                    new Product("Gyros im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 15.00,  "/images/products/snack-16.jpg", 4L),
-                    new Product("Gyros im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 16.00,  "/images/products/snack-17.jpg", 4L),
-                    new Product("Mega Kebab im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 21.00,  "/images/products/snack-18.jpg", 4L),
-                    new Product("Falafel im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 13.00,  "/images/products/snack-19.jpg", 4L),
-                    new Product("Falafel im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 14.00,  "/images/products/snack-20.jpg", 4L),
-                    new Product("Kapsalon", "Pommes Frites, Kebabfleisch, überbackener Käse und Sauce nach Wahl", 20.00,  "/images/products/snack-21.jpg", 4L),
-                    new Product("Hamburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 12.00,  "/images/products/snack-22.jpg", 4L),
-                    new Product("Doppel Hamburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 16.00,  "/images/products/snack-23.jpg", 4L),
-                    new Product("Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 13.00,  "/images/products/snack-24.jpg", 4L),
-                    new Product("Doppel Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 17.00,  "/images/products/snack-25.jpg", 4L),
-                    new Product("Triple Burger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 19.00,  "/images/products/snack-26.jpg", 4L),
-                    new Product("Triple Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 20.00,  "/images/products/snack-27.jpg", 4L),
-                    new Product("Schnitzelbrot", "Mit Tomaten, Salat, Zwiebeln und Sauce nach Wahl", 13.00,  "/images/products/snack-28.jpg", 4L),
-                    new Product("Grüner Salat", null, 9.00,  "/images/products/salat-1.jpg", 5L),
-                    new Product("Gemischter Salat", null, 13.00,  "/images/products/salat-2.jpg", 5L),
-                    new Product("Caprese Salat", null, 14.00,  "/images/products/salat-3.jpg", 5L),
-                    new Product("Thonsalat", null, 14.00,  "/images/products/salat-3.jpg", 5L),
-                    new Product("Griechischer Salat", null, 14.00,  "/images/products/salat-6.jpg", 5L),
-                    new Product("Tiramisu", null, 8.00,  "/images/products/dessert-1.jpg", 6L),
-                    new Product("Schoggimousse", null, 8.00,  "/images/products/dessert-2.jpg", 6L),
-                    new Product("Kokosnuss", null, 9.00,  "/images/products/dessert-3.jpg", 6L),
-                    new Product("Limone Glace", null, 9.00,  "/images/products/dessert-4.jpg", 6L),
-                    new Product("Coppa Spagnola (Kirsch, 100ml)", null, 10.00,  "/images/products/dessert-5.jpg", 6L),
-                    new Product("Coppa Café (90ml)", null, 10.00,  "/images/products/dessert-6.jpg", 6L),
-                    new Product("Coppa Stracciatella (100ml)", null, 10.00,  "/images/products/dessert-7.jpg", 6L),
-                    new Product("Coppa Pistacchio (100ml)", null, 10.00,  "/images/products/dessert-8.jpg", 6L),
-                    new Product("Kinderglace Panda (Vanille)", null, 7.00,  "/images/products/dessert-9.jpg", 6L),
-                    new Product("Kinderglace Pingu (Schokolade)", null, 7.00,  "/images/products/dessert-10.jpg", 6L),
-                    new Product("Coca-Cola 0,5L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-1.jpg", 7L),
-                    new Product("Coca-Cola 1,5L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-2.jpg", 7L),
-                    new Product("Coca-Cola Zero 0,5L", "Enthält Koffein (10,0 mg/100 ml)", 4.00,  "/images/products/drink-3.jpg", 7L),
-                    new Product("Coca-Cola Zero 1,5L", "Enthält Koffein (10,0 mg/100 ml)", 7.00,  "/images/products/drink-4.jpg", 7L),
-                    new Product("Rivella Rot 0,5L", null, 4.00,  "/images/products/drink-5.jpg", 7L),
-                    new Product("Rivella Rot 1,5L", null, 7.00,  "/images/products/drink-6.jpg", 7L),
+                    new Product("Pide Gemüse", "Mozzarella, Peperoni, Pilze und Oliven", 19.50, "/images/products/pide-1.jpg", 3L),
+                    new Product("Pide Kalbfleisch", "Mozzarella, Kalbfleisch, Zwiebeln, Peperoni und Kräuterbutter", 21.50, "/images/products/pide-2.jpg", 3L),
+                    new Product("Pide Spinat", "Mozzarella, Spinat und Ei", 19.50, "/images/products/pide-3.jpg", 3L),
+                    new Product("Pide Kebab", "Mozzarella und Kebabfleisch", 19.50, "/images/products/pide-4.jpg", 3L),
+                    new Product("Chicken Nuggets Box (8 Stück)", "Mit Pommes Frites und Sauce nach Wahl", 17.50, "/images/products/snack-1.jpg", 4L),
+                    new Product("Chicken Nuggets Teller (8 Stück)", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 21.50, "/images/products/snack-2.jpg", 4L),
+                    new Product("Pouletflügeli Teller (6 Stück)", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50, "/images/products/snack-3.jpg", 4L),
+                    new Product("Falafel Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 19.50, "/images/products/snack-4.jpg", 4L),
+                    new Product("Kebab Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50, "/images/products/snack-5.jpg", 4L),
+                    new Product("Eglifilet Teller", "Serviert mit Pommes Frites, Salat und Sauce nach Wahl", 22.50, "/images/products/snack-6.jpg", 4L),
+                    new Product("Eglifilet Box", "Mit Pommes Frites und Sauce nach Wahl", 18.50, "/images/products/snack-7.jpg", 4L),
+                    new Product("Döner Box", "Mit Sauce nach Wahl", 14.00, "/images/products/snack-8.jpg", 4L),
+                    new Product("Döner Box XXL", "Mit Sauce nach Wahl", 18.00, "/images/products/snack-9.jpg", 4L),
+                    new Product("Pommes Frites", "Mit Sauce nach Wahl", 8.00, "/images/products/snack-10.jpg", 4L),
+                    new Product("Pommes Frites XXL", "Mit Sauce nach Wahl", 12.00, "/images/products/snack-11.jpg", 4L),
+                    new Product("Kebab im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 13.00, "/images/products/snack-12.jpg", 4L),
+                    new Product("Kebab im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 14.00, "/images/products/snack-13.jpg", 4L),
+                    new Product("Kebab Cheese im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 15.00, "/images/products/snack-14.jpg", 4L),
+                    new Product("Kebab Cheese im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 16.00, "/images/products/snack-15.jpg", 4L),
+                    new Product("Gyros im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 15.00, "/images/products/snack-16.jpg", 4L),
+                    new Product("Gyros im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 16.00, "/images/products/snack-17.jpg", 4L),
+                    new Product("Mega Kebab im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 21.00, "/images/products/snack-18.jpg", 4L),
+                    new Product("Falafel im Taschenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 13.00, "/images/products/snack-19.jpg", 4L),
+                    new Product("Falafel im Fladenbrot", "Mit Tomaten, Salat, Zwiebeln, Rotkohl, Karotten und Sauce nach Wahl", 14.00, "/images/products/snack-20.jpg", 4L),
+                    new Product("Kapsalon", "Pommes Frites, Kebabfleisch, überbackener Käse und Sauce nach Wahl", 20.00, "/images/products/snack-21.jpg", 4L),
+                    new Product("Hamburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 12.00, "/images/products/snack-22.jpg", 4L),
+                    new Product("Doppel Hamburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 16.00, "/images/products/snack-23.jpg", 4L),
+                    new Product("Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 13.00, "/images/products/snack-24.jpg", 4L),
+                    new Product("Doppel Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 17.00, "/images/products/snack-25.jpg", 4L),
+                    new Product("Triple Burger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 19.00, "/images/products/snack-26.jpg", 4L),
+                    new Product("Triple Cheeseburger", "Mit Tomaten, Salat, Zwiebeln, Essiggurken und Sauce nach Wahl", 20.00, "/images/products/snack-27.jpg", 4L),
+                    new Product("Schnitzelbrot", "Mit Tomaten, Salat, Zwiebeln und Sauce nach Wahl", 13.00, "/images/products/snack-28.jpg", 4L),
+                    new Product("Grüner Salat", null, 9.00, "/images/products/salat-1.jpg", 5L),
+                    new Product("Gemischter Salat", null, 13.00, "/images/products/salat-2.jpg", 5L),
+                    new Product("Caprese Salat", null, 14.00, "/images/products/salat-3.jpg", 5L),
+                    new Product("Thonsalat", null, 14.00, "/images/products/salat-3.jpg", 5L),
+                    new Product("Griechischer Salat", null, 14.00, "/images/products/salat-6.jpg", 5L),
+                    new Product("Tiramisu", null, 8.00, "/images/products/dessert-1.jpg", 6L),
+                    new Product("Schoggimousse", null, 8.00, "/images/products/dessert-2.jpg", 6L),
+                    new Product("Kokosnuss", null, 9.00, "/images/products/dessert-3.jpg", 6L),
+                    new Product("Limone Glace", null, 9.00, "/images/products/dessert-4.jpg", 6L),
+                    new Product("Coppa Spagnola (Kirsch, 100ml)", null, 10.00, "/images/products/dessert-5.jpg", 6L),
+                    new Product("Coppa Café (90ml)", null, 10.00, "/images/products/dessert-6.jpg", 6L),
+                    new Product("Coppa Stracciatella (100ml)", null, 10.00, "/images/products/dessert-7.jpg", 6L),
+                    new Product("Coppa Pistacchio (100ml)", null, 10.00, "/images/products/dessert-8.jpg", 6L),
+                    new Product("Kinderglace Panda (Vanille)", null, 7.00, "/images/products/dessert-9.jpg", 6L),
+                    new Product("Kinderglace Pingu (Schokolade)", null, 7.00, "/images/products/dessert-10.jpg", 6L),
+                    new Product("Coca-Cola 0,5L", "Enthält Koffein (10,0 mg/100 ml)", 4.00, "/images/products/drink-1.jpg", 7L),
+                    new Product("Coca-Cola 1,5L", "Enthält Koffein (10,0 mg/100 ml)", 7.00, "/images/products/drink-2.jpg", 7L),
+                    new Product("Coca-Cola Zero 0,5L", "Enthält Koffein (10,0 mg/100 ml)", 4.00, "/images/products/drink-3.jpg", 7L),
+                    new Product("Coca-Cola Zero 1,5L", "Enthält Koffein (10,0 mg/100 ml)", 7.00, "/images/products/drink-4.jpg", 7L),
+                    new Product("Rivella Rot 0,5L", null, 4.00, "/images/products/drink-5.jpg", 7L),
+                    new Product("Rivella Rot 1,5L", null, 7.00, "/images/products/drink-6.jpg", 7L),
                     new Product("Fanta 0,5L", null, 4.00, "/images/products/drink-7.jpg", 7L),
                     new Product("Fanta 1,5L", null, 7.00, "/images/products/drink-8.jpg", 7L),
-                    new Product("Fanta Mango 0,5L", null, 4.00,  "/images/products/drink-9.jpg", 7L),
-                    new Product("Fanta Mango 1,5L", null, 7.00,  "/images/products/drink-10.jpg", 7L),
-                    new Product("Ice Tea Peach 0,5L", null, 4.00,  "/images/products/drink-11.jpg", 7L),
-                    new Product("Ice Tea Peach 1,5L", null, 7.00,  "/images/products/drink-12.jpg", 7L),
-                    new Product("Ice Tea Lemon 0,5L", "Enthält Koffein (25,0 mg/100 ml)", 4.00,  "/images/products/drink-13.jpg", 7L),
-                    new Product("Ice Tea Lemon 1,5L", "Enthält Koffein (25,0 mg/100 ml)", 7.00,  "/images/products/drink-14.jpg", 7L),
-                    new Product("Uludag Limonada 0,5L", null, 4.00,  "/images/products/drink-15.jpg", 7L),
-                    new Product("Uludag Orange 0,5L", null, 4.00,  "/images/products/drink-16.jpg", 7L),
-                    new Product("Apfelschorle 0,5L", null, 4.00,  "/images/products/drink-17.jpg", 7L),
-                    new Product("Valser Classic 0,5L", null, 4.00,  "/images/products/drink-18.jpg", 7L),
-                    new Product("Valser Classic 1,5L", null, 7.00,  "/images/products/drink-19.jpg", 7L),
-                    new Product("Valser Silence 0,5L", null, 4.00,  "/images/products/drink-20.jpg", 7L),
-                    new Product("Red Bull 0,26L", "Hoher Koffeingehalt (32,0 mg/100 ml)", 5.00,  "/images/products/drink-21.jpg", 7L),
-                    new Product("Monster Energy 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-22.jpg", 7L),
-                    new Product("Monster Zero 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00,  "/images/products/drink-23.jpg", 7L),
-                    new Product("Heineken 0,5L", "5% vol", 5.00,  "/images/products/alcohol-1.jpg", 8L),
-                    new Product("Feldschlösschen 0,5L", "5% vol", 5.00,  "/images/products/alcohol-2.jpg", 8L),
-                    new Product("Smirnoff ICE 0,276L", "4% vol", 6.00,  "/images/products/alcohol-3.jpg", 8L),
-                    new Product("Dole du Valais 50L", "Rotwein, 13% vol", 18.00,  "/images/products/alcohol-4.jpg", 8L),
-                    new Product("Nero d'Avola 70cl", "Rotwein, 13% vol", 24.00,  "/images/products/alcohol-5.jpg", 8L),
-                    new Product("Fendant du Valais 50cl", "Weisswein, 13% vol", 18.00,  "/images/products/alcohol-6.jpg", 8L),
-                    new Product("Rosé du Gamay 50cl", "Roséwein, 13% vol", 18.00,  "/images/products/alcohol-7.jpg", 8L),
-                    new Product("Vodka 70cl", "38% vol", 36.00,  "/images/products/alcohol-8.jpg", 8L)
+                    new Product("Fanta Mango 0,5L", null, 4.00, "/images/products/drink-9.jpg", 7L),
+                    new Product("Fanta Mango 1,5L", null, 7.00, "/images/products/drink-10.jpg", 7L),
+                    new Product("Ice Tea Peach 0,5L", null, 4.00, "/images/products/drink-11.jpg", 7L),
+                    new Product("Ice Tea Peach 1,5L", null, 7.00, "/images/products/drink-12.jpg", 7L),
+                    new Product("Ice Tea Lemon 0,5L", "Enthält Koffein (25,0 mg/100 ml)", 4.00, "/images/products/drink-13.jpg", 7L),
+                    new Product("Ice Tea Lemon 1,5L", "Enthält Koffein (25,0 mg/100 ml)", 7.00, "/images/products/drink-14.jpg", 7L),
+                    new Product("Uludag Limonada 0,5L", null, 4.00, "/images/products/drink-15.jpg", 7L),
+                    new Product("Uludag Orange 0,5L", null, 4.00, "/images/products/drink-16.jpg", 7L),
+                    new Product("Apfelschorle 0,5L", null, 4.00, "/images/products/drink-17.jpg", 7L),
+                    new Product("Valser Classic 0,5L", null, 4.00, "/images/products/drink-18.jpg", 7L),
+                    new Product("Valser Classic 1,5L", null, 7.00, "/images/products/drink-19.jpg", 7L),
+                    new Product("Valser Silence 0,5L", null, 4.00, "/images/products/drink-20.jpg", 7L),
+                    new Product("Red Bull 0,26L", "Hoher Koffeingehalt (32,0 mg/100 ml)", 5.00, "/images/products/drink-21.jpg", 7L),
+                    new Product("Monster Energy 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00, "/images/products/drink-22.jpg", 7L),
+                    new Product("Monster Zero 0,356L", "Hoher Koffeingehalt (36,0 mg/100 ml)", 5.00, "/images/products/drink-23.jpg", 7L),
+                    new Product("Heineken 0,5L", "5% vol", 5.00, "/images/products/alcohol-1.jpg", 8L),
+                    new Product("Feldschlösschen 0,5L", "5% vol", 5.00, "/images/products/alcohol-2.jpg", 8L),
+                    new Product("Smirnoff ICE 0,276L", "4% vol", 6.00, "/images/products/alcohol-3.jpg", 8L),
+                    new Product("Dole du Valais 50L", "Rotwein, 13% vol", 18.00, "/images/products/alcohol-4.jpg", 8L),
+                    new Product("Nero d'Avola 70cl", "Rotwein, 13% vol", 24.00, "/images/products/alcohol-5.jpg", 8L),
+                    new Product("Fendant du Valais 50cl", "Weisswein, 13% vol", 18.00, "/images/products/alcohol-6.jpg", 8L),
+                    new Product("Rosé du Gamay 50cl", "Roséwein, 13% vol", 18.00, "/images/products/alcohol-7.jpg", 8L),
+                    new Product("Vodka 70cl", "38% vol", 36.00, "/images/products/alcohol-8.jpg", 8L)
             );
             productRepository.saveAll(products);
         }
