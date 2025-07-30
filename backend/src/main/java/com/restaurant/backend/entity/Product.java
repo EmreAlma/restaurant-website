@@ -30,7 +30,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Categories category;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "product_ingredient_to_add_ingredient",
             joinColumns = @JoinColumn(name = "product_id"),
