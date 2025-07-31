@@ -43,24 +43,33 @@ public class DataInitializer  {
     }
 
     private void initExceptions() {
-        updateProductIngredients("Grüner Salat", List.of("Tomatensauce", "Champignons"));
-        updateProductIngredients("Thonsalat", List.of("Tomatensauce", "Champignons"));
-          // product category yede ihtiyaç var çünkü aynı isimde birden fazla ürün olabiliyor farklı categorylere ait Margarita  ürünü Pizza ve Pizza 40 da bulunuyor
-        setProductToIngredientsByIngredientCategory("Kebab Teller","Salatsauce", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Chicken Nuggets Teller (8 Stück)","Salatsauce", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Pouletflügeli Teller (6 Stück)","Salatsauce", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Falafel Teller","Salatsauce", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Eglifilet Teller","Salatsauce", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Kebab im Fladenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Kebab im Taschenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Kebab Cheese im Taschenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Kebab Cheese im Fladenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Gyros im Taschenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Gyros im Fladenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Mega Kebab im Fladenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Falafel im Taschenbrot","Kebap", "Warme Snacks");
-        setProductToIngredientsByIngredientCategory("Falafel im Fladenbrot","Kebap", "Warme Snacks");
-        
+        boolean isExceptionsNeedtoBeInitilaized=true;
+        List<Product> products = productRepository.findAll();
+        for (Product product:products){
+            if(!product.getIngredientToAdd().isEmpty()){
+                isExceptionsNeedtoBeInitilaized=false;
+            }
+        }
+
+        if(isExceptionsNeedtoBeInitilaized) {
+         //   updateProductIngredients("Grüner Salat", List.of("Tomatensauce", "Champignons"));
+
+            // product category yede ihtiyaç var çünkü aynı isimde birden fazla ürün olabiliyor farklı categorylere ait Margarita  ürünü Pizza ve Pizza 40 da bulunuyor
+            setProductToIngredientsByIngredientCategory("Kebab Teller", "Salatsauce", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Chicken Nuggets Teller (8 Stück)", "Salatsauce", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Pouletflügeli Teller (6 Stück)", "Salatsauce", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Falafel Teller", "Salatsauce", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Eglifilet Teller", "Salatsauce", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Kebab im Fladenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Kebab im Taschenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Kebab Cheese im Taschenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Kebab Cheese im Fladenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Gyros im Taschenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Gyros im Fladenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Mega Kebab im Fladenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Falafel im Taschenbrot", "Kebap", "Warme Snacks");
+            setProductToIngredientsByIngredientCategory("Falafel im Fladenbrot", "Kebap", "Warme Snacks");
+        }
     }
 
     private void IngridientCategory() {
@@ -82,7 +91,7 @@ public class DataInitializer  {
         List<Ingredient> ingredientList = ingredientRepository.findAll();
         if (ingredientList.isEmpty()) {
             List<Ingredient> ingredients = List.of(
-                    
+
                     new Ingredient("Champignons", 1.0, 1L),
                     new Ingredient("Zwiebeln", 1.0, 1L),
                     new Ingredient("Feta", 1.0, 1L),
