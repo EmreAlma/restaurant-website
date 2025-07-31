@@ -46,7 +46,21 @@ public class DataInitializer  {
         updateProductIngredients("Grüner Salat", List.of("Tomatensauce", "Champignons"));
         updateProductIngredients("Thonsalat", List.of("Tomatensauce", "Champignons"));
           // product category yede ihtiyaç var çünkü aynı isimde birden fazla ürün olabiliyor farklı categorylere ait Margarita  ürünü Pizza ve Pizza 40 da bulunuyor
-        setProductToIngredientsByIngredientCategory("Kebab Teller","Pizza","Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Kebab Teller","Salatsauce", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Chicken Nuggets Teller (8 Stück)","Salatsauce", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Pouletflügeli Teller (6 Stück)","Salatsauce", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Falafel Teller","Salatsauce", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Eglifilet Teller","Salatsauce", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Kebab im Fladenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Kebab im Taschenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Kebab Cheese im Taschenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Kebab Cheese im Fladenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Gyros im Taschenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Gyros im Fladenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Mega Kebab im Fladenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Falafel im Taschenbrot","Kebap", "Warme Snacks");
+        setProductToIngredientsByIngredientCategory("Falafel im Fladenbrot","Kebap", "Warme Snacks");
+        
     }
 
     private void IngridientCategory() {
@@ -55,10 +69,9 @@ public class DataInitializer  {
 
             categoriesList.add(new IngredientCategories("Pizza"));
             categoriesList.add(new IngredientCategories("Pizza 40cm"));
-            categoriesList.add(new IngredientCategories("Pide"));
-            categoriesList.add(new IngredientCategories("Warme Snacks"));
-            categoriesList.add(new IngredientCategories("Salate Sauce"));
+            categoriesList.add(new IngredientCategories("Kebap"));
             categoriesList.add(new IngredientCategories("Sauce"));
+            categoriesList.add(new IngredientCategories("Salatsauce"));          
 
             ingredientCategoriesRepository.saveAll(categoriesList);
         }
@@ -69,9 +82,7 @@ public class DataInitializer  {
         List<Ingredient> ingredientList = ingredientRepository.findAll();
         if (ingredientList.isEmpty()) {
             List<Ingredient> ingredients = List.of(
-                    new Ingredient("Tomatensauce", 0.0, 1L),
-                    new Ingredient("Mozzarella", 0.0, 1L),
-                    new Ingredient("Oregano", 0.0, 1L),
+                    
                     new Ingredient("Champignons", 1.0, 1L),
                     new Ingredient("Zwiebeln", 1.0, 1L),
                     new Ingredient("Feta", 1.0, 1L),
@@ -99,6 +110,36 @@ public class DataInitializer  {
                     new Ingredient("Salami", 2.0, 1L),
                     new Ingredient("Pouletgeschnetzeltes", 3.0, 1L),
                     new Ingredient("Ananas", 1.0, 1L),
+                    new Ingredient("Champignons", 1.0, 2L),
+                    new Ingredient("Zwiebeln", 1.0, 2L),
+                    new Ingredient("Feta", 1.0, 2L),
+                    new Ingredient("Gorgonzola", 1.0, 2L),
+                    new Ingredient("Schinken", 2.0, 2L),
+                    new Ingredient("Pommes Frites", 3.0, 2L),
+                    new Ingredient("Sardellen", 2.0, 2L),
+                    new Ingredient("Kapern", 1.0, 2L),
+                    new Ingredient("Meeresfrüchte", 3.0, 2L),
+                    new Ingredient("Frische Tomaten", 1.0, 2L),
+                    new Ingredient("Oliven", 1.0, 2L),
+                    new Ingredient("Basilikum", 1.0, 2L),
+                    new Ingredient("Speck", 2.0, 2L),
+                    new Ingredient("Ei", 2.0, 2L),
+                    new Ingredient("Kebabfleisch", 3.0, 2L),
+                    new Ingredient("scharfe Salami", 2.0, 2L),
+                    new Ingredient("Peperoni", 1.0, 2L),
+                    new Ingredient("Artischocken", 1.0, 2L),
+                    new Ingredient("Thunfisch", 2.0, 2L),
+                    new Ingredient("Crevetten", 2.0, 2L),
+                    new Ingredient("Spinat", 1.0, 2L),
+                    new Ingredient("Rindfleisch", 3.0, 2L),
+                    new Ingredient("Knoblauch", 0.0, 2L),
+                    new Ingredient("Kräuterbutter", 0.0, 2L),
+                    new Ingredient("Salami", 2.0, 2L),
+                    new Ingredient("Pouletgeschnetzeltes", 3.0, 2L),
+                    new Ingredient("Ananas", 1.0, 2L),
+                    new Ingredient("Feta", 1.0, 3L),
+                    new Ingredient("Speck", 2.0, 3L),
+                    new Ingredient("Pommes Frites", 3.0, 3L),
                     new Ingredient("Cocktail", 0.0, 4L),
                     new Ingredient("Joghurt", 0.0, 4L),
                     new Ingredient("Curry", 0.0, 4L),
@@ -143,22 +184,22 @@ public class DataInitializer  {
         if (categoryRepository.findAll().isEmpty()) {
             List<IngredientCategories> allIngredientCategories = ingredientCategoriesRepository.findAll();
 
-
-            IngredientCategories salate = allIngredientCategories.stream().filter(ic -> ic.getCategoryName().equalsIgnoreCase("Salate Sauce")).findFirst().orElseThrow(() -> new RuntimeException("Cant Found Category"));
-
             IngredientCategories pizza = allIngredientCategories.stream().filter(ic -> ic.getCategoryName().equalsIgnoreCase("Pizza")).findFirst().orElseThrow(() -> new RuntimeException("Cant Found Category"));
 
             IngredientCategories pizza40 = allIngredientCategories.stream().filter(ic -> ic.getCategoryName().equalsIgnoreCase("Pizza 40cm")).findFirst().orElseThrow(() -> new RuntimeException("Cant Found Category"));
 
+            IngredientCategories sauce = allIngredientCategories.stream().filter(ic -> ic.getCategoryName().equalsIgnoreCase("Sauce")).findFirst().orElseThrow(() -> new RuntimeException("Cant Found Category"));
 
-            List<IngredientCategories> pizzaIngredientCategories = new ArrayList<>(allIngredientCategories);
+            IngredientCategories salatesauce = allIngredientCategories.stream().filter(ic -> ic.getCategoryName().equalsIgnoreCase("Salatsauce")).findFirst().orElseThrow(() -> new RuntimeException("Cant Found Category"));
+
+
 
             List<Categories> categoriesList = new ArrayList<>();
             categoriesList.add(new Categories("Pizza", List.of(pizza)));
             categoriesList.add(new Categories("Pizza 40cm", List.of(pizza40)));
-            categoriesList.add(new Categories("Pide", pizzaIngredientCategories));
-            categoriesList.add(new Categories("Warme Snacks", pizzaIngredientCategories));
-            categoriesList.add(new Categories("Salate", List.of(salate)));
+            categoriesList.add(new Categories("Pide", new ArrayList<>()));
+            categoriesList.add(new Categories("Warme Snacks",List.of(sauce)));
+            categoriesList.add(new Categories("Salate", List.of(salatesauce)));
             categoriesList.add(new Categories("Dessert",  new ArrayList<>()));
             categoriesList.add(new Categories("Getränke", new ArrayList<>()));
             categoriesList.add(new Categories("Biere & Weine", new ArrayList<>()));
