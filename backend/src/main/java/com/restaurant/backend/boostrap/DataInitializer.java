@@ -157,8 +157,8 @@ public class DataInitializer  {
                     new Ingredient("Mayonnaise", 0.0, 4L),
                     new Ingredient("Barbecue", 0.0, 4L),
                     new Ingredient("Scharf", 0.0, 4L),
-                    new Ingredient("Fransözisch", 0.0, 4L),
-                    new Ingredient("Italienisch", 0.0, 4L)
+                    new Ingredient("Fransözisch", 0.0, 5L),
+                    new Ingredient("Italienisch", 0.0, 5L)
             );
 
             ingredientRepository.saveAll(ingredients);
