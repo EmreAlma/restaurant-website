@@ -23,7 +23,7 @@ public class ProductIngredients {
 
    private List<Ingredient> ingredientstoAdd=new ArrayList<>();
 
-    private List<Ingredient> ingredientstoRemove=new ArrayList<>();
+    private List<String> ingredientstoRemove=new ArrayList<>();
 
 
     public ProductIngredients() {
@@ -85,11 +85,11 @@ public class ProductIngredients {
         this.ingredientstoAdd = ingredientstoAdd;
     }
 
-    public List<Ingredient> getIngredientstoRemove() {
+    public List<String> getIngredientstoRemove() {
         return ingredientstoRemove;
     }
 
-    public void setIngredientstoRemove(List<Ingredient> ingredientstoRemove) {
+    public void setIngredientstoRemove(List<String> ingredientstoRemove) {
         this.ingredientstoRemove = ingredientstoRemove;
     }
 }

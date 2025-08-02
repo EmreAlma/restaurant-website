@@ -41,21 +41,20 @@ public class Product {
 
 
 
-    @ManyToMany
-    @JoinTable(
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
             name = "product_default_ingredient",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+            joinColumns = @JoinColumn(name = "product_id")
     )
-    @JsonIgnore
-    private List<Ingredient> defaultIngredients = new ArrayList<>();
+    @Column(name = "ingredient_name", nullable = false)
+    private List<String> defaultIngredients = new ArrayList<>();
 
 
-    public List<Ingredient> getDefaultIngredients() {
+    public List<String> getDefaultIngredients() {
         return defaultIngredients;
     }
 
-    public void setDefaultIngredients(List<Ingredient> defaultIngredients) {
+    public void setDefaultIngredients(List<String> defaultIngredients) {
         this.defaultIngredients = defaultIngredients;
     }
 
@@ -131,7 +130,7 @@ public class Product {
     public Product() {
     }
 
-    public Product withDefaultIngredients(List<Ingredient> ingredients) {
+    public Product withDefaultIngredients(List<String> ingredients) {
         this.defaultIngredients = ingredients;
         return this;
     }
