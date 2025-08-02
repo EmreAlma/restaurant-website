@@ -1,5 +1,6 @@
 package com.restaurant.backend.model.order;
 
+import java.time.Instant;
 import java.util.List;
 
 public class OrderRequestDTO {
@@ -7,6 +8,7 @@ public class OrderRequestDTO {
     private AddressDTO address;
     private List<OrderItemRequestDTO> orderItems;
     private String comment;
+    private Instant deliveryTime;
 
     // Getters & Setters
 
@@ -36,5 +38,12 @@ public class OrderRequestDTO {
     }
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Instant getDeliveryTime() {
+        return deliveryTime;
+    }
+    public void setDeliveryTime(Instant deliveryTime) {
+        this.deliveryTime = deliveryTime;
     }
 }

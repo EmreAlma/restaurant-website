@@ -11,6 +11,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class OrderWebSocketController {
         this.messagingTemplate = messagingTemplate;
         this.orderRepository = orderRepository;
     }
+
     public void broadcastNewOrder(Order order) {
         messagingTemplate.convertAndSend("/topic/orders", order);
     }
@@ -48,14 +50,23 @@ public class OrderWebSocketController {
     }
 
     @MessageMapping("/orders/updateStatus")
-    public void updateOrderStatus(Order orderUpdate) {
+    public void updateOrderStatus(Order orderUpdate, Principal principal) {
         Order existingOrder = orderRepository.findById(orderUpdate.getId())
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
         existingOrder.setOrderStatus(orderUpdate.getOrderStatus());
+        existingOrder.setDeliveryTime(orderUpdate.getDeliveryTime());
         Order updatedOrder = orderRepository.save(existingOrder);
 
+        // Admin tarafına güncel siparişi gönder
         messagingTemplate.convertAndSend("/topic/orders", updatedOrder);
-    }
 
+        // Müşteriye sipariş onaylandı mesajı gönder
+        if (updatedOrder.getUser() != null) {
+            String username = updatedOrder.getUser().getUsername();
+            String confirmationMessage = "Ihre Bestellung wurde bestätigt. Geplante Lieferzeit: " +
+                    (updatedOrder.getDeliveryTime() != null ? updatedOrder.getDeliveryTime().toString() : "Unbekannt");
+            messagingTemplate.convertAndSendToUser(username, "/queue/order-confirmed", confirmationMessage);
+        }
+    }
 }

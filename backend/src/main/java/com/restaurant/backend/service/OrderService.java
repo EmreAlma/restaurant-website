@@ -56,6 +56,7 @@ public class OrderService {
         order.setTotalPrice(orderRequest.getTotalPrice());
         order.setOrderTime(Instant.now());
         order.setOrderStatus(OrderStatus.CREATED);
+        order.setDeliveryTime(orderRequest.getDeliveryTime());
 
         List<OrderItem> orderItems = new ArrayList<>();
 

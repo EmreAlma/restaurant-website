@@ -34,6 +34,9 @@ public class Order {
     @Column(name = "orderStatus")
     private OrderStatus orderStatus;
 
+    @Column(name = "deliveryTime")
+    private Instant deliveryTime;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
@@ -69,6 +72,13 @@ public class Order {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+    public Instant getDeliveryTime() {
+    return deliveryTime;
+    }
+
+    public void setDeliveryTime(Instant deliveryTime) {
+        this.deliveryTime = deliveryTime;
     }
 
     @PrePersist
